@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { Music, Wand2, RefreshCw, Zap, Disc, Clock, Piano, Dices, Layers, Sparkles, Sliders, Mic, X, Save, Trash2, FolderOpen, Activity, Hash, Gauge, Waves, Settings2, GanttChartSquare, ChevronDown, ChevronUp, PlayCircle, Lock, CreditCard, PenTool } from 'lucide-react';
+import { Music, Wand2, RefreshCw, Zap, Disc, Clock, Piano, Dices, Layers, Sparkles, Sliders, Mic, X, Save, Trash2, FolderOpen, Activity, Hash, Gauge, Waves, Settings2, GanttChartSquare, ChevronDown, ChevronUp, PlayCircle, Lock, CreditCard, PenTool, AlertCircle } from 'lucide-react';
 import { GENRES, SONG_LENGTHS, GENRE_INSTRUMENTS, GENRE_BPM_RANGES, GENRE_SOUND_DESIGN, GENRE_MIX_MASTER, GENERIC_AUTOMATIONS, INTRO_STYLES, INTRO_BUILDUPS, OUTRO_STYLES, OUTRO_FADES, BREAKDOWN_TYPES, BREAKDOWN_INTENSITIES, PLACEHOLDER_PROMPT, MOODS, VOCAL_STYLES, VOCAL_EFFECTS, INSTRUMENT_ROLES, MUSICAL_KEYS, INSTRUMENT_INTENSITIES } from './constants';
 import { generateSunoPrompt, generateTrackTitle } from './services/geminiService';
 import { SunoPrompt, GenreOption, SongLength, GenreWeight, InstrumentSettings, Preset } from './types';
@@ -458,8 +458,9 @@ const App: React.FC = () => {
         theme
       );
       setPromptData(result);
-    } catch (err) {
-      setError("Unable to generate prompt. Please try again.");
+    } catch (err: any) {
+      const errorMessage = err?.message || "Unable to generate prompt. Please try again.";
+      setError(errorMessage);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -1204,8 +1205,11 @@ const App: React.FC = () => {
                 <LoadingSpinner />
               </div>
             ) : error ? (
-              <div className="h-full flex items-center justify-center p-8 text-center bg-red-900/10 rounded-xl border border-red-900/30 text-red-400">
-                <p>{error}</p>
+              <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-red-900/10 rounded-xl border border-red-900/30 text-red-400">
+                <AlertCircle className="w-10 h-10 mb-2 opacity-50" />
+                <h3 className="font-bold mb-1">Error Generating Prompt</h3>
+                <p className="text-sm font-mono opacity-80">{error}</p>
+                <button onClick={() => setError(null)} className="mt-4 text-xs text-zinc-500 hover:text-zinc-300 underline">Dismiss</button>
               </div>
             ) : (
               <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">

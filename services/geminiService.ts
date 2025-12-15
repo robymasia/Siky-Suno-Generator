@@ -21,7 +21,7 @@ export const generateSunoPrompt = async (
   lyricsTheme: string = '' // New param
 ): Promise<SunoPrompt> => {
   if (!process.env.API_KEY) {
-    throw new Error("API Key is missing");
+    throw new Error("API Key is missing or invalid in environment variables.");
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -228,8 +228,11 @@ export const generateSunoPrompt = async (
       }
     });
 
-    const text = response.text;
+    let text = response.text;
     if (!text) throw new Error("No response from AI");
+    
+    // Clean markdown if present to avoid JSON parse errors
+    text = text.replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
     
     return JSON.parse(text) as SunoPrompt;
 
@@ -240,7 +243,7 @@ export const generateSunoPrompt = async (
 };
 
 export const generateTrackTitle = async (genre: string, vibe: string): Promise<string> => {
-  if (!process.env.API_KEY) throw new Error("API Key is missing");
+  if (!process.env.API_KEY) throw new Error("API Key is missing or invalid in environment variables.");
 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
@@ -258,8 +261,16 @@ export const generateTrackTitle = async (genre: string, vibe: string): Promise<s
     }
   });
 
-  const text = response.text;
+  let text = response.text;
   if (!text) return "Untitled Track";
-  const json = JSON.parse(text);
-  return json.title || "Untitled Track";
+  
+  // Clean markdown if present
+  text = text.replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '');
+  
+  try {
+      const json = JSON.parse(text);
+      return json.title || "Untitled Track";
+  } catch (e) {
+      return "Untitled Track";
+  }
 };
