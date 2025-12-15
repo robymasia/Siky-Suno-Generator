@@ -794,8 +794,12 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-zinc-100 p-2 md:p-6 relative overflow-hidden font-sans">
-      {/* Background Decor */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-green-900/10 via-transparent to-transparent pointer-events-none" />
+       {/* Dynamic Background matching login theme */}
+       <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-green-900/20 blur-[120px] rounded-full mix-blend-screen" />
+          <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-red-900/20 blur-[120px] rounded-full mix-blend-screen" />
+          <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] bg-yellow-900/10 blur-[120px] rounded-full mix-blend-screen" />
+       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         
