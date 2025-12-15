@@ -62,10 +62,6 @@ const CollapsibleSection: React.FC<{
   );
 };
 
-// --- PLACEHOLDER URL: REPLACE THIS WITH YOUR UPLOADED IMAGE URL ---
-// Note: Local file paths (C:\...) are not supported in browsers for security reasons.
-const LOGIN_BACKGROUND_IMAGE = "https://i.imgur.com/DO6tj10.png";
-
 const App: React.FC = () => {
   const [selectedGenres, setSelectedGenres] = useState<GenreOption[]>([GENRES[0]]);
   const [genreWeights, setGenreWeights] = useState<Record<string, number>>({ [GENRES[0].id]: 100 });
@@ -732,18 +728,8 @@ const App: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-black text-zinc-100 flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Background Image Layer */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url('${LOGIN_BACKGROUND_IMAGE}')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          {/* Overlay to ensure text readability */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
-        </div>
+        {/* Background Gradient Layer */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-green-900 via-yellow-900 to-red-900 opacity-50" />
         
         <div className="max-w-md w-full bg-zinc-900/60 border border-zinc-800/50 rounded-xl p-8 backdrop-blur-md shadow-2xl relative z-10">
           <div className="flex flex-col items-center mb-8">
