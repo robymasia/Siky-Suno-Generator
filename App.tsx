@@ -448,7 +448,7 @@ const App: React.FC = () => {
         keySig, 
         bpmVal, 
         soundDesign, 
-        automations,
+        automations, 
         introStyle,
         introBuildup,
         outroStyle,
@@ -1207,9 +1207,27 @@ const App: React.FC = () => {
             ) : error ? (
               <div className="h-full flex flex-col items-center justify-center p-8 text-center bg-red-900/10 rounded-xl border border-red-900/30 text-red-400">
                 <AlertCircle className="w-10 h-10 mb-2 opacity-50" />
-                <h3 className="font-bold mb-1">Error Generating Prompt</h3>
-                <p className="text-sm font-mono opacity-80">{error}</p>
-                <button onClick={() => setError(null)} className="mt-4 text-xs text-zinc-500 hover:text-zinc-300 underline">Dismiss</button>
+                <h3 className="font-bold mb-1">Configuration Error</h3>
+                <p className="text-sm font-mono opacity-80 mb-4">{error}</p>
+                
+                {error.includes("API Key") && (
+                   <div className="text-xs text-zinc-500 bg-black/20 p-4 rounded border border-zinc-800 text-left space-y-2 max-w-md">
+                      <p className="font-bold text-zinc-300">How to fix in Vercel:</p>
+                      <ol className="list-decimal list-inside space-y-1">
+                        <li>Go to your Vercel Project Settings</li>
+                        <li>Navigate to <strong>Environment Variables</strong></li>
+                        <li>Add a new variable:
+                           <div className="pl-4 mt-1 font-mono text-zinc-400">
+                             Key: <span className="text-green-400">API_KEY</span><br/>
+                             Value: <span className="text-blue-400">Your_Gemini_API_Key</span>
+                           </div>
+                        </li>
+                        <li>Redeploy your application (or just the latest commit)</li>
+                      </ol>
+                   </div>
+                )}
+
+                <button onClick={() => setError(null)} className="mt-6 text-xs text-zinc-500 hover:text-zinc-300 underline">Dismiss</button>
               </div>
             ) : (
               <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">

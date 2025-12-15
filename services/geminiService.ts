@@ -1,6 +1,15 @@
 import { GoogleGenAI, Type, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
 
+// Helper to safely get the API key without crashing if 'process' is undefined
+const getApiKey = (): string | undefined => {
+  try {
+    return typeof process !== 'undefined' && process.env ? process.env.API_KEY : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 export const generateSunoPrompt = async (
   genres: GenreWeight[], 
   length: string, 
@@ -18,13 +27,16 @@ export const generateSunoPrompt = async (
   outroFade: string = 'Standard',
   breakdownType: string = 'Standard',
   breakdownIntensity: string = 'Standard',
-  lyricsTheme: string = '' // New param
+  lyricsTheme: string = '' 
 ): Promise<SunoPrompt> => {
-  if (!process.env.API_KEY) {
-    throw new Error("API Key is missing or invalid in environment variables.");
+  
+  const apiKey = getApiKey();
+
+  if (!apiKey) {
+    throw new Error("API Key is missing. Please add the 'API_KEY' variable to your Vercel Project Settings (Environment Variables).");
   }
 
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey });
 
   const lengthInstructions: Record<string, string> = {
     'Short': "Create a concise structure (approx 2 mins). Structure should be simple, e.g., [Intro], [Verse], [Chorus], [Outro]. Focus on impact.",
@@ -116,7 +128,7 @@ export const generateSunoPrompt = async (
        
        Choose 3-4 descriptive terms that paint this specific sonic picture.`;
 
-  // New Logic for Lyrics Theme
+  // Logic for Lyrics Theme
   const lyricsThemeInstruction = lyricsTheme && lyricsTheme.trim() !== ''
     ? `MANDATORY LYRICAL THEME: The user has explicitly provided a theme/topic for the song: "${lyricsTheme}". 
        
@@ -243,9 +255,10 @@ export const generateSunoPrompt = async (
 };
 
 export const generateTrackTitle = async (genre: string, vibe: string): Promise<string> => {
-  if (!process.env.API_KEY) throw new Error("API Key is missing or invalid in environment variables.");
+  const apiKey = getApiKey();
+  if (!apiKey) throw new Error("API Key is missing. Please add the 'API_KEY' variable to your Vercel Project Settings.");
 
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey });
   
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
