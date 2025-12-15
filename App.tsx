@@ -62,6 +62,10 @@ const CollapsibleSection: React.FC<{
   );
 };
 
+// --- PLACEHOLDER URL: REPLACE THIS WITH YOUR UPLOADED IMAGE URL ---
+// Note: Local file paths (C:\...) are not supported in browsers for security reasons.
+const LOGIN_BACKGROUND_IMAGE = "https://i.imgur.com/DO6tj10.png";
+
 const App: React.FC = () => {
   const [selectedGenres, setSelectedGenres] = useState<GenreOption[]>([GENRES[0]]);
   const [genreWeights, setGenreWeights] = useState<Record<string, number>>({ [GENRES[0].id]: 100 });
@@ -728,10 +732,20 @@ const App: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-black text-zinc-100 flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Background Decor */}
-        <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-green-900/10 via-transparent to-transparent pointer-events-none" />
+        {/* Background Image Layer */}
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url('${LOGIN_BACKGROUND_IMAGE}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          {/* Overlay to ensure text readability */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+        </div>
         
-        <div className="max-w-md w-full bg-zinc-900/40 border border-zinc-800 rounded-xl p-8 backdrop-blur-md shadow-2xl relative z-10">
+        <div className="max-w-md w-full bg-zinc-900/60 border border-zinc-800/50 rounded-xl p-8 backdrop-blur-md shadow-2xl relative z-10">
           <div className="flex flex-col items-center mb-8">
              <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 mb-4 shadow-lg shadow-green-900/20">
                <Lock className="w-8 h-8 text-green-500" />
@@ -833,15 +847,24 @@ const App: React.FC = () => {
                    <Save size={16} />
                  </button>
                  {presets.length > 0 && (
-                   <div className="flex gap-1 max-w-[200px] overflow-x-auto scrollbar-none">
-                     {presets.slice(0, 3).map(p => (
-                       <button
-                         key={p.id}
-                         onClick={() => handleLoadPreset(p)}
-                         className="px-2 py-1 text-[10px] bg-zinc-900 border border-zinc-800 rounded hover:border-green-500/50 truncate max-w-[80px]"
-                       >
-                         {p.name}
-                       </button>
+                   <div className="flex gap-1 max-w-[300px] overflow-x-auto scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent pb-1 items-center">
+                     {presets.map(p => (
+                       <div key={p.id} className="flex items-center bg-zinc-900 border border-zinc-800 rounded shrink-0 group hover:border-zinc-700 transition-colors">
+                         <button
+                           onClick={() => handleLoadPreset(p)}
+                           className="px-2 py-1 text-[10px] hover:text-green-400 truncate max-w-[80px]"
+                           title={p.name}
+                         >
+                           {p.name}
+                         </button>
+                         <button
+                           onClick={(e) => handleDeletePreset(p.id, e)}
+                           className="px-1.5 py-1 border-l border-zinc-800 text-zinc-600 hover:text-red-500 hover:bg-zinc-950/50 rounded-r transition-colors"
+                           title="Delete Preset"
+                         >
+                           <Trash2 size={10} />
+                         </button>
+                       </div>
                      ))}
                    </div>
                  )}
