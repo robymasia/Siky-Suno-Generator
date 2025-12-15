@@ -1212,17 +1212,14 @@ const App: React.FC = () => {
                 
                 {error.includes("API Key") && (
                    <div className="text-xs text-zinc-500 bg-black/20 p-4 rounded border border-zinc-800 text-left space-y-2 max-w-md">
-                      <p className="font-bold text-zinc-300">How to fix in Vercel:</p>
-                      <ol className="list-decimal list-inside space-y-1">
-                        <li>Go to your Vercel Project Settings</li>
-                        <li>Navigate to <strong>Environment Variables</strong></li>
-                        <li>Add a new variable:
-                           <div className="pl-4 mt-1 font-mono text-zinc-400">
-                             Key: <span className="text-green-400">API_KEY</span><br/>
-                             Value: <span className="text-blue-400">Your_Gemini_API_Key</span>
-                           </div>
+                      <p className="font-bold text-zinc-300">⚠️ IMPORTANTE (Vercel):</p>
+                      <ol className="list-decimal list-inside space-y-2 text-zinc-400">
+                        <li>Vai su <strong>Settings &gt; Environment Variables</strong> nel tuo progetto Vercel.</li>
+                        <li>Assicurati che la chiave si chiami esattamente <span className="text-green-400 font-mono">API_KEY</span>.</li>
+                        <li>
+                            <strong>MOLTO IMPORTANTE:</strong> Dopo aver salvato la chiave, devi andare su <strong>Deployments</strong>, cliccare i tre puntini sull'ultimo deploy e selezionare <strong>Redeploy</strong>.
                         </li>
-                        <li>Redeploy your application (or just the latest commit)</li>
+                        <li>La chiave non funziona finché non fai un nuovo Redeploy!</li>
                       </ol>
                    </div>
                 )}

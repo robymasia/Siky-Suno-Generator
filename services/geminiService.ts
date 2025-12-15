@@ -1,10 +1,23 @@
 import { GoogleGenAI, Type, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
 
-// Helper to safely get the API key without crashing if 'process' is undefined
+// Helper to safely get the API key with fallback to common frameworks
 const getApiKey = (): string | undefined => {
   try {
-    return typeof process !== 'undefined' && process.env ? process.env.API_KEY : undefined;
+    if (typeof process !== 'undefined' && process.env) {
+        // Strictly prioritize API_KEY as requested, but check others if undefined
+        return process.env.API_KEY || 
+               process.env.NEXT_PUBLIC_API_KEY || 
+               process.env.VITE_API_KEY || 
+               process.env.REACT_APP_API_KEY;
+    }
+    // Fallback for Vite environments where process might be shimmed differently
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+        // @ts-ignore
+        return import.meta.env.VITE_API_KEY || import.meta.env.API_KEY;
+    }
+    return undefined;
   } catch {
     return undefined;
   }
@@ -33,6 +46,7 @@ export const generateSunoPrompt = async (
   const apiKey = getApiKey();
 
   if (!apiKey) {
+    console.warn("API Key check failed. Environment variables found:", typeof process !== 'undefined' ? process.env : 'N/A');
     throw new Error("API Key is missing. Please add the 'API_KEY' variable to your Vercel Project Settings (Environment Variables).");
   }
 
