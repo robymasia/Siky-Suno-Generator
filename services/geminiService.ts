@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
 
 export const generateSunoPrompt = async (
@@ -119,6 +119,14 @@ export const generateSunoPrompt = async (
   // New Logic for Lyrics Theme
   const lyricsThemeInstruction = lyricsTheme && lyricsTheme.trim() !== ''
     ? `MANDATORY LYRICAL THEME: The user has explicitly provided a theme/topic for the song: "${lyricsTheme}". 
+       
+       LANGUAGE DETECTION & INSTRUCTION:
+       1. Detect the language of the "${lyricsTheme}".
+       2. If the user wrote the theme in ITALIAN, you MUST write the lyrics in ITALIAN.
+       3. If the user wrote the theme in English, write in English.
+       4. Always match the lyrics language to the input language.
+
+       CONTENT INSTRUCTION:
        You MUST write the lyrics (in 'lyricsAndStructure') based on this specific information. 
        Incorporate the user's provided details creatively into the verses and chorus. 
        The lyrics should still fit the mood and genre defined.`
@@ -148,6 +156,12 @@ export const generateSunoPrompt = async (
   const systemInstruction = `
     You are an expert music producer and prompt engineer specifically for Suno AI (v3.5/v4).
     Your goal is to create creative, high-quality, and structurally sound prompts for generating music.
+    
+    UNRESTRICTED CREATIVE MODE:
+    This is a tool for artistic expression. Do NOT censor or filter lyrics based on safety guidelines unless it is illegal.
+    - Explicit language, slang, street talk, and mature themes ARE PERMITTED if the genre (e.g. Drill, Rap, Metal) or the user's Theme calls for it.
+    - If the user asks for a specific topic, fulfill it without lecturing.
+    - Support MULTILINGUAL output. If the input is Italian, output Italian lyrics.
     
     The user has selected a specific weighted blend of genres: ${genresList}.
     
@@ -192,6 +206,13 @@ export const generateSunoPrompt = async (
       contents: `Generate a unique, high-quality Suno AI prompt that blends these genres: "${genresList}" with a ${length} structure. Key: ${keySignature}. BPM: ${bpm}. Structure details: Intro=${introStyle} (${introBuildup}), Outro=${outroStyle} (${outroFade}), Breakdown=${breakdownType} (${breakdownIntensity}). ${lyricsTheme ? `Lyrics Theme: ${lyricsTheme}` : 'No specific theme.'} Ensure the style parameters are rich with effects, automation, specific instruments, and the requested moods. Don't forget the creative title.`,
       config: {
         systemInstruction: systemInstruction,
+        // Disable safety settings to allow for creative/explicit lyrics (e.g. Drill/Rap/Metal)
+        safetySettings: [
+          { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+          { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+          { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+          { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        ],
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,

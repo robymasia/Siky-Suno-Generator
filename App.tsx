@@ -984,7 +984,7 @@ const App: React.FC = () => {
                     <textarea
                       value={lyricsTheme}
                       onChange={(e) => setLyricsTheme(e.target.value)}
-                      placeholder="E.g. A cyberpunk love story in the rain..."
+                      placeholder="E.g. A cyberpunk love story... / Es. Una storia d'amore cyberpunk..."
                       className="w-full bg-black/50 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:border-green-500 outline-none resize-none h-20 placeholder:text-zinc-700"
                     />
                   </div>
