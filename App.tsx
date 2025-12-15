@@ -729,7 +729,7 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen bg-black text-zinc-100 flex items-center justify-center p-4 relative overflow-hidden">
         {/* Background Gradient Layer */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-green-900 via-yellow-900 to-red-900 opacity-50" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-green-900 via-yellow-900 to-red-900 opacity-60" />
         
         <div className="max-w-md w-full bg-zinc-900/60 border border-zinc-800/50 rounded-xl p-8 backdrop-blur-md shadow-2xl relative z-10">
           <div className="flex flex-col items-center mb-8">
@@ -794,11 +794,14 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-zinc-100 p-2 md:p-6 relative overflow-hidden font-sans">
-       {/* Dynamic Background matching login theme */}
-       <div className="fixed inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-green-900/20 blur-[120px] rounded-full mix-blend-screen" />
-          <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-red-900/20 blur-[120px] rounded-full mix-blend-screen" />
-          <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] bg-yellow-900/10 blur-[120px] rounded-full mix-blend-screen" />
+       {/* Dynamic Background matching login theme - Enhanced for Visibility */}
+       <div className="fixed inset-0 z-0 pointer-events-none bg-black">
+          {/* Green Blob (Top Left) */}
+          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-green-900/40 blur-[140px] rounded-full mix-blend-screen opacity-80" />
+          {/* Red Blob (Top Right) */}
+          <div className="absolute top-[10%] right-[-10%] w-[50%] h-[50%] bg-red-900/40 blur-[140px] rounded-full mix-blend-screen opacity-80" />
+          {/* Yellow Blob (Bottom Center/Left) */}
+          <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-yellow-900/30 blur-[140px] rounded-full mix-blend-screen opacity-80" />
        </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
