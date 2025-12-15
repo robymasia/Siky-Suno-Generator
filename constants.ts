@@ -234,7 +234,8 @@ export const MOODS = [
   'Aggressive', 'Euphoric', 'Hypnotic', 'Ethereal', 'Gritty',
   'Soulful', 'Funky', 'Industrial', 'Dreamy', 'Chaotic',
   'Intense', 'Minimal', 'Psychedelic', 'Romantic', 'Nostalgic',
-  'Happy', 'Sad', 'Angry', 'Hopeful', 'Sexy', 'Groovy'
+  'Happy', 'Sad', 'Angry', 'Hopeful', 'Sexy', 'Groovy',
+  'Summer Vibe', 'Party', 'Sunset', 'Club', 'Rave', 'Disco', 'Festival'
 ];
 
 export const VOCAL_STYLES = [
