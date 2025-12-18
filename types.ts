@@ -11,6 +11,7 @@ export interface GenreOption {
   id: string;
   label: string;
   color: string;
+  description?: string;
 }
 
 export interface GenreWeight {

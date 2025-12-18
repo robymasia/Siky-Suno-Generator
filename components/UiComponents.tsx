@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Loader2, Copy, Check } from 'lucide-react';
 
@@ -13,13 +14,13 @@ export const Tooltip: React.FC<TooltipProps> = ({
   className = "" 
 }) => {
   return (
-    <div className={`group relative flex items-center justify-center ${className}`}>
+    <div className={`group relative inline-block ${className}`}>
       {children}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50 pointer-events-none w-max max-w-[200px]">
-        <div className="bg-zinc-950 border border-zinc-700 text-zinc-300 text-[10px] rounded px-2 py-1 shadow-xl text-center leading-tight">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block z-[9999] pointer-events-none w-max max-w-[260px] animate-in fade-in zoom-in-95 duration-200 origin-bottom">
+        <div className="bg-zinc-900/98 backdrop-blur-xl border border-zinc-700/80 text-zinc-100 text-[11px] font-semibold rounded-xl px-4 py-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-center leading-relaxed">
           {content}
         </div>
-        <div className="w-2 h-2 bg-zinc-950 border-r border-b border-zinc-700 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1"></div>
+        <div className="w-3 h-3 bg-zinc-900/98 border-r border-b border-zinc-700/80 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1.5 shadow-sm"></div>
       </div>
     </div>
   );
@@ -86,6 +87,6 @@ export const CopyButton = ({ text }: { text: string }) => {
 export const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-12 space-y-4">
     <Loader2 className="w-10 h-10 text-yellow-500 animate-spin" />
-    <p className="text-zinc-500 text-sm animate-pulse">Generating SIKY vibes...</p>
+    <p className="text-zinc-500 text-sm animate-pulse font-bold uppercase tracking-widest">Generating SIKY vibes...</p>
   </div>
 );

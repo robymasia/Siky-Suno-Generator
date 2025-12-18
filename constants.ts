@@ -1,34 +1,34 @@
 import { GenreOption, SongLength } from './types';
 
 export const GENRES: GenreOption[] = [
-  { id: 'house', label: 'House', color: 'bg-blue-600 hover:bg-blue-500' },
-  { id: 'techno', label: 'Techno', color: 'bg-slate-700 hover:bg-slate-600' },
-  { id: 'trance', label: 'Trance', color: 'bg-cyan-600 hover:bg-cyan-500' },
-  { id: 'pop', label: 'Pop', color: 'bg-pink-500 hover:bg-pink-400' },
-  { id: 'kpop', label: 'K-Pop', color: 'bg-fuchsia-500 hover:bg-fuchsia-400' },
-  { id: 'reggaeton', label: 'Reggaeton', color: 'bg-orange-500 hover:bg-orange-400' },
-  { id: 'latin', label: 'Latin', color: 'bg-red-500 hover:bg-red-400' },
-  { id: 'rock', label: 'Rock', color: 'bg-stone-700 hover:bg-stone-600' },
-  { id: 'metal', label: 'Metal', color: 'bg-zinc-800 hover:bg-zinc-700' },
-  { id: 'rnb', label: 'R&B', color: 'bg-violet-600 hover:bg-violet-500' },
-  { id: 'soul', label: 'Soul', color: 'bg-amber-700 hover:bg-amber-600' },
-  { id: 'funk', label: 'Funk', color: 'bg-yellow-600 hover:bg-yellow-500' },
-  { id: 'disco', label: 'Disco', color: 'bg-yellow-500 hover:bg-yellow-400' },
-  { id: 'country', label: 'Country', color: 'bg-orange-700 hover:bg-orange-600' },
-  { id: 'dancehall', label: 'Dancehall', color: 'bg-yellow-600 hover:bg-yellow-500' },
-  { id: 'reggae', label: 'Reggae', color: 'bg-green-600 hover:bg-green-500' },
-  { id: 'dubstep', label: 'Dubstep', color: 'bg-purple-600 hover:bg-purple-500' },
-  { id: 'dnb', label: 'Drum & Bass', color: 'bg-red-600 hover:bg-red-500' },
-  { id: 'synthwave', label: 'Synthwave', color: 'bg-fuchsia-600 hover:bg-fuchsia-500' },
-  { id: 'ambient', label: 'Ambient', color: 'bg-teal-600 hover:bg-teal-500' },
-  { id: 'edm', label: 'Mainstage EDM', color: 'bg-indigo-600 hover:bg-indigo-500' },
-  { id: 'hiphop', label: 'Hip Hop', color: 'bg-orange-600 hover:bg-orange-500' },
-  { id: 'trap', label: 'Trap', color: 'bg-rose-600 hover:bg-rose-500' },
-  { id: 'drill', label: 'Drill', color: 'bg-stone-600 hover:bg-stone-500' },
-  { id: 'cinematic', label: 'Cinematic', color: 'bg-slate-500 hover:bg-slate-400' },
-  { id: 'epic', label: 'Epic', color: 'bg-amber-600 hover:bg-amber-500' },
-  { id: 'jazz', label: 'Jazz', color: 'bg-sky-600 hover:bg-sky-500' },
-  { id: 'blues', label: 'Blues', color: 'bg-indigo-700 hover:bg-indigo-600' },
+  { id: 'house', label: 'House', color: 'bg-blue-600 hover:bg-blue-500', description: 'Ritmi 4/4 costanti, perfetti per club e groove estivi.' },
+  { id: 'techno', label: 'Techno', color: 'bg-slate-700 hover:bg-slate-600', description: 'Suoni industriali, ipnotici e sintetici ad alta energia.' },
+  { id: 'trance', label: 'Trance', color: 'bg-cyan-600 hover:bg-cyan-500', description: 'Melodie euforiche, pad atmosferici e build-up epici.' },
+  { id: 'pop', label: 'Pop', color: 'bg-pink-500 hover:bg-pink-400', description: 'Melodie orecchiabili e strutture radio-friendly.' },
+  { id: 'kpop', label: 'K-Pop', color: 'bg-fuchsia-500 hover:bg-fuchsia-400', description: 'Fusione di generi, produzione massimalista e stile coreano.' },
+  { id: 'reggaeton', label: 'Reggaeton', color: 'bg-orange-500 hover:bg-orange-400', description: 'Il classico ritmo Dembow con vibrazioni tropicali.' },
+  { id: 'latin', label: 'Latin', color: 'bg-red-500 hover:bg-red-400', description: 'Strumentazione organica, fiati e ritmi calienti.' },
+  { id: 'rock', label: 'Rock', color: 'bg-stone-700 hover:bg-stone-600', description: 'Chitarre elettriche, batterie potenti e attitudine ribelle.' },
+  { id: 'metal', label: 'Metal', color: 'bg-zinc-800 hover:bg-zinc-700', description: 'Distorsione estrema, ritmi veloci e potenza sonora.' },
+  { id: 'rnb', label: 'R&B', color: 'bg-violet-600 hover:bg-violet-500', description: 'Ritmi caldi, armonie vocali e groove vellutati.' },
+  { id: 'soul', label: 'Soul', color: 'bg-amber-700 hover:bg-amber-600', description: 'Emozione pura, radici gospel e calore analogico.' },
+  { id: 'funk', label: 'Funk', color: 'bg-yellow-600 hover:bg-yellow-500', description: 'Slap bass, chitarre ritmiche e groove irresistibili.' },
+  { id: 'disco', label: 'Disco', color: 'bg-yellow-500 hover:bg-yellow-400', description: 'Basso in ottave, archi e luci stroboscopiche.' },
+  { id: 'country', label: 'Country', color: 'bg-orange-700 hover:bg-orange-600', description: 'Storytelling, chitarre acustiche e stile Nashville.' },
+  { id: 'dancehall', label: 'Dancehall', color: 'bg-yellow-600 hover:bg-yellow-500', description: 'Ritmo caraibico moderno, basso profondo e sirene.' },
+  { id: 'reggae', label: 'Reggae', color: 'bg-green-600 hover:bg-green-500', description: 'Ritmo in levare, messaggi positivi e linee di basso dub.' },
+  { id: 'dubstep', label: 'Dubstep', color: 'bg-purple-600 hover:bg-purple-500', description: 'Wobble bass, drop aggressivi e percussioni pesanti.' },
+  { id: 'dnb', label: 'Drum & Bass', color: 'bg-red-600 hover:bg-red-500', description: 'Ritmi frenetici a 174 BPM e bassi profondi.' },
+  { id: 'synthwave', label: 'Synthwave', color: 'bg-fuchsia-600 hover:bg-fuchsia-500', description: 'Estetica anni 80, sintetizzatori analogici e neon.' },
+  { id: 'ambient', label: 'Ambient', color: 'bg-teal-600 hover:bg-teal-500', description: 'Texture rilassanti, droni e paesaggi sonori immensi.' },
+  { id: 'edm', label: 'Mainstage EDM', color: 'bg-indigo-600 hover:bg-indigo-500', description: 'Suoni da festival, grandi drop e energia pura.' },
+  { id: 'hiphop', label: 'Hip Hop', color: 'bg-orange-600 hover:bg-orange-500', description: 'Beat classici, campionamenti e stile urban.' },
+  { id: 'trap', label: 'Trap', color: 'bg-rose-600 hover:bg-rose-500', description: 'Hi-hats veloci, rullanti pesanti e bassi 808.' },
+  { id: 'drill', label: 'Drill', color: 'bg-stone-600 hover:bg-stone-500', description: 'Atmosfere oscure, bassi scivolati e testi crudi.' },
+  { id: 'cinematic', label: 'Cinematic', color: 'bg-slate-500 hover:bg-slate-400', description: 'Musica da film, archi orchestrali e tensione epica.' },
+  { id: 'epic', label: 'Epic', color: 'bg-amber-600 hover:bg-amber-500', description: 'Grandi orchestre, cori e impatti trailer.' },
+  { id: 'jazz', label: 'Jazz', color: 'bg-sky-600 hover:bg-sky-500', description: 'Improvvisazione, accordi complessi e classe pura.' },
+  { id: 'blues', label: 'Blues', color: 'bg-indigo-700 hover:bg-indigo-600', description: 'Anima, chitarre slide e la classica struttura a 12 battute.' },
 ];
 
 export const GENRE_BPM_RANGES: Record<string, { min: number, max: number, default: number }> = {
@@ -121,6 +121,18 @@ export const BREAKDOWN_INTENSITIES = [
   'High'
 ];
 
+export const STRUCTURE_DESCRIPTIONS: Record<string, string> = {
+  'Standard': 'Bilanciamento classico per il genere.',
+  'Low': 'Sottile e minimale, mantiene l\'energia bassa.',
+  'Medium': 'Equilibrato, con un impatto moderato.',
+  'High': 'Massima energia e tensione drammatica.',
+  'Short': 'Transizione rapida verso la sezione successiva.',
+  'Long': 'Build-up o evoluzione lenta e progressiva.',
+  'Slow Fade': 'Sfumatura graduale del volume finale.',
+  'Abrupt Stop': 'Fine secca e improvvisa del brano.',
+  'Echoing Decay': 'Coda finale ricca di delay e riverbero.'
+};
+
 export const GENRE_INSTRUMENTS: Record<string, string[]> = {
   house: ['Korg M1 Piano', '909 Drums', 'Deep Sub Bass', 'Rhodes Piano', 'Diva Vocals', 'Funky Guitar', 'Saxophone', 'Disco Strings', 'Violin Solo', 'Orchestra Hit', 'Trumpet'],
   techno: ['Roland 909 Kick', 'Rumble Bass', 'TB-303 Acid', 'Modular Bleeps', 'Industrial Percussion', 'Dissonant Stabs', 'Hypnotic Loops', 'Dark Strings'],
@@ -180,7 +192,7 @@ export const GENRE_SOUND_DESIGN: Record<string, string[]> = {
   cinematic: ['Huge Hall Reverb', 'Dynamic Swells', 'Sub Booms', 'Atmos', 'Orchestral Positioning'],
   epic: ['Impact FX', 'Risers', 'Hybrid Trailer FX', 'Compression', 'Cinematic Hits'],
   jazz: ['Room Reverb', 'Warm Tube Saturation', 'Live Recording Feel', 'Tape Hiss', 'Dynamic Range'],
-  blues: ['Amp Distortion', 'Spring Reverb', 'Tube Warmth', 'Live Room', 'Crunch'],
+  blues: ['Amp Distortion', 'Spring Reverb', 'Tube Overdrive', 'Mono Room Mic', 'Vintage Compression', 'Raw Mix'],
 };
 
 export const GENRE_MIX_MASTER: Record<string, string[]> = {
@@ -211,7 +223,7 @@ export const GENRE_MIX_MASTER: Record<string, string[]> = {
   cinematic: ['Dynamic Range Expansion', 'Orchestral Hall Reverb', 'Sub-Bass Boom', 'Volume Swells', 'Section Panning', 'Epic Impact'],
   epic: ['Hybrid Impact Compression', 'Brass Swell', 'Trailer Hits', 'Master Bus Glue', 'Braam Distortion', 'Risky Dynamic Range'],
   jazz: ['Room Reverb', 'Warm Tube EQ', 'Dynamic Mic Compression', 'Tape Hiss', 'Natural Panning', 'Live Room Feel'],
-  blues: ['Amp Cabinet Sim', 'Spring Reverb', 'Tube Overdrive', 'Mono Room Mic', 'Vintage Compression', 'Raw Mix'],
+  blues: ['Amp Distortion', 'Spring Reverb', 'Tube Overdrive', 'Mono Room Mic', 'Vintage Compression', 'Raw Mix'],
 };
 
 export const GENERIC_AUTOMATIONS = [
@@ -302,6 +314,28 @@ export const INSTRUMENT_ROLES = [
 export const INSTRUMENT_INTENSITIES = [
   'Prominent', 'Standard', 'Subtle', 'Background'
 ];
+
+export const ROLE_DESCRIPTIONS: Record<string, string> = {
+  Feature: 'Lo strumento principale che spicca nel mix.',
+  Lead: 'La melodia portante che guida il brano.',
+  Bass: 'Gestione delle frequenze basse e del groove.',
+  Rhythm: 'Supporto ritmico e armonico (accordi).',
+  Pad: 'Texture sostenute per creare atmosfera.',
+  Atmosphere: 'Sottofondo ambientale e spaziale.',
+  FX: 'Effetti sonori e transizioni creative.',
+  Fill: 'Abbellimenti ritmici tra le sezioni.',
+  Solo: 'Sezione dedicata per un virtuosismo strumentale.',
+  Backing: 'Supporto armonico di sottofondo.'
+};
+
+export const VOCAL_STYLE_DESCRIPTIONS: Record<string, string> = {
+  'Auto-tuned': 'Voce moderna con correzione d\'intonazione marcata.',
+  'Chanting': 'Canto ritmico e ripetitivo, quasi tribale.',
+  'Ethereal': 'Voce celestiale, leggera e ricca di riverbero.',
+  'Soulful': 'Canto espressivo e pieno di emozione.',
+  'Spoken Word': 'Testo parlato, stile narrativo o poetico.',
+  'Robotic/Vocoder': 'Suono elettronico e sintetico della voce.'
+};
 
 export const PLACEHOLDER_PROMPT = {
   title: "Neon Horizon",
