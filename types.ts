@@ -25,27 +25,43 @@ export interface InstrumentSettings {
   intensity?: string;
 }
 
+export interface LengthPreset {
+  id: string;
+  label: string;
+  length: SongLength;
+  arrangement?: string;
+  intro?: string;
+  outro?: string;
+  breakdown?: string;
+}
+
 export interface Preset {
   id: string;
   name: string;
   selectedGenres: GenreOption[];
   genreWeights: Record<string, number>;
   selectedLength: SongLength;
+  selectedLengthPresetId?: string;
   selectedInstruments: InstrumentSettings[];
   selectedMoods: string[];
   selectedVocals: string[];
   selectedVocalEffects: string[];
   selectedSoundDesign?: string[];
   selectedAutomations?: string[];
+  selectedMasteringStyle?: string;
   selectedIntroStyle?: string;
   selectedIntroBuildup?: string;
   selectedOutroStyle?: string;
   selectedOutroFade?: string;
   selectedBreakdownType?: string;
   selectedBreakdownIntensity?: string;
+  selectedArrangement?: string;
+  selectedBridgeStyle?: string;
+  verseEnergy?: string;
+  chorusEnergy?: string;
   selectedKey?: string;
   selectedBpm?: number;
-  lyricsTheme?: string; // New field for lyrics topic
+  lyricsTheme?: string;
 }
 
 export type SongLength = 'Short' | 'Medium' | 'Long';

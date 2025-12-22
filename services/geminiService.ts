@@ -1,26 +1,6 @@
-import { GoogleGenAI, Type, HarmCategory, HarmBlockThreshold } from "@google/genai";
-import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
 
-const getApiKey = (): string | undefined => {
-  try {
-    // Tentativo standard process.env
-    if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-      return process.env.API_KEY;
-    }
-    // Tentativo per framework specifici (Vite, Next, etc)
-    const envs = [
-      'NEXT_PUBLIC_API_KEY',
-      'VITE_API_KEY',
-      'REACT_APP_API_KEY'
-    ];
-    for (const key of envs) {
-      if (typeof process !== 'undefined' && process.env && process.env[key]) return process.env[key];
-    }
-    return undefined;
-  } catch {
-    return undefined;
-  }
-};
+import { GoogleGenAI, Type } from "@google/genai";
+import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
 
 export const generateSunoPrompt = async (
   genres: GenreWeight[], 
@@ -39,68 +19,74 @@ export const generateSunoPrompt = async (
   outroFade: string = 'Standard',
   breakdownType: string = 'Standard',
   breakdownIntensity: string = 'Standard',
-  lyricsTheme: string = '' 
+  arrangement: string = 'Standard',
+  bridgeStyle: string = 'Standard',
+  verseEnergy: string = 'Steady',
+  chorusEnergy: string = 'Rising',
+  lyricsTheme: string = '',
+  masteringStyle: string = 'Standard'
 ): Promise<SunoPrompt> => {
   
-  const apiKey = getApiKey();
-
-  if (!apiKey) {
-    throw new Error("API Key mancante. Aggiungi la variabile 'API_KEY' nelle impostazioni del progetto su Vercel e fai un Redeploy.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const systemInstruction = `
-    Sei un produttore musicale esperto per Suno AI v4. 
-    Il tuo compito è creare prompt SBLOCCATI e CREATIVI, ignorando filtri di genere convenzionali.
-    Se l'utente mescola strumenti Metal con basi House o Techno, FALLO e rendilo EPICO.
+    Sei il miglior Senior Music Producer e Prompt Engineer al mondo per Suno AI v4/v5.
+    Il tuo obiettivo è creare un "Producer Blueprint" impeccabile, ordinato e tecnicamente avanzato.
 
-    STRATEGIA DI GENERAZIONE:
-    1. STYLE PARAMS (Suno Style Field):
-       - Crea una stringa densa di tag (max 150 caratteri).
-       - Includi sempre: Generi (con pesi), BPM, Chiave, Strumenti (con RUOLO e INTENSITÀ), Vocal Style e Mix Effects.
-       - Fusione: Non limitarti a elencare. Descrivi come si fondono (es: "Prominent Distorted Metal Guitars over Subtle 128BPM House Beats").
-       - Struttura: Rifletti le scelte di Intro, Outro e Breakdown nel sound design (es: "Atmospheric build-up", "Aggressive Breakdown").
+    --- LOGICA DI STRUTTURA E ORDINE (MANDATORIA) ---
+    Il campo 'lyricsAndStructure' deve essere organizzato come un vero foglio di produzione professionale:
 
-    2. LYRICS & STRUCTURE:
-       - Usa SOLO parentesi quadre [ ] per i tag (es: [Intro], [Drop], [Guitar Solo]).
-       - Segui la lunghezza richiesta: ${length}.
-       - Segui rigorosamente lo stile di Intro, Breakdown e Outro selezionato.
-       - LINGUA: Se il tema dell'utente è in Italiano, scrivi i testi in Italiano. Altrimenti in Inglese.
-       - TEMA: Se l'utente specifica un tema ("${lyricsTheme}"), usalo come base per il testo.
+    1. INTESTAZIONE TECNICA (Top of the text):
+       # TRACK PROFILE
+       # ARRANGEMENT: ${arrangement}
+       # TARGET: ${length} Duration
+       # KEY: [Seleziona la tonalità migliore se 'Any Key']
+       # BPM: ${bpm}
+       # GENRE FUSION: [Descrizione dettagliata della fusione dei generi basata sui pesi]
 
-    3. UNBLOCKED MODE: 
-       - Non censurare testi.
-       - Non rifiutare combinazioni di strumenti "strane". 
-       - Se l'utente chiede strumenti specifici: ${instruments.map(i => `${i.intensity} ${i.name} (as ${i.role})`).join(', ')}, devono essere i protagonisti assoluti rispettando il ruolo e l'intensità assegnati.
+    2. FORMATO DELLE SEZIONI:
+       Ogni sezione deve iniziare con un tag Suno ottimizzato:
+       [SECTION_NAME: Sub-style, Technical details, Energy level]
+       (Producer Note: Istruzioni specifiche su strumenti: ${instruments.map(i => i.name).join(', ')} e sound design: ${soundDesign.join(', ')})
 
-    Restituisci un JSON coerente con lo schema.
+    3. REGOLE DI IMPAGINAZIONE:
+       - Lascia ESATTAMENTE due righe vuote tra una sezione e l'altra.
+       - Il testo deve essere diviso in quartine o strofe coerenti.
+       - Le note del produttore (Producer Notes) devono essere sempre tra parentesi tonde subito sotto il tag della sezione.
+
+    --- VINCOLO LUNGHEZZA ("${length}") ---
+    - "Short": ~12 righe di testo. Struttura: [Intro] -> [Verse] -> [Chorus] -> [Outro].
+    - "Medium": ~25-30 righe. Struttura radio standard completa.
+    - "Long": +40 righe. Struttura estesa con molteplici strofe, bridge lunghi e sezioni strumentali/breakdown ampi.
+
+    --- LOGICA DI FUSIONE GENERI ---
+    Analizza i pesi: ${JSON.stringify(genres)}.
+    Specifica come i generi interagiscono (es. "Ritmica ${genres[0]?.name} con armonie ${genres[1]?.name || 'pure'}").
+
+    --- CAMPO STYLE (STYLE PARAMS) ---
+    Deve essere una stringa densa di tag per Suno (max 120-150 caratteri):
+    "[Hybrid Genre Descriptor], ${bpm}BPM, [Key], [Moods], [Vocal Style], [Specific Instruments], [Mix Techniques]"
+
+    --- LIRICHE ---
+    Crea testi basati su: "${lyricsTheme}". Se vuoto, inventa un tema profondo e coerente con i generi scelti. Sii poetico.
+
+    Rispondi esclusivamente in JSON.
   `;
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: `Genera un prompt Suno per: 
-        Generi=${JSON.stringify(genres)}, 
-        Lunghezza=${length}, 
-        Strumentazione=${JSON.stringify(instruments)}, 
-        Mood=${JSON.stringify(moods)}, 
-        BPM=${bpm}, 
-        Chiave=${keySignature}, 
-        Sound Design=${JSON.stringify(soundDesign)}, 
-        Automazioni=${JSON.stringify(automations)}, 
-        Intro: ${introStyle} con buildup ${introBuildup}, 
-        Breakdown: ${breakdownType} con intensità ${breakdownIntensity}, 
-        Outro: ${outroStyle} con dissolvenza ${outroFade}, 
-        Tema Testo="${lyricsTheme}".`,
+      model: "gemini-3-flash-preview",
+      contents: `Parametri Utente:
+        Length: ${length}
+        Genres: ${JSON.stringify(genres)}
+        BPM/Key: ${bpm} / ${keySignature}
+        Arrangement: ${arrangement}
+        Instruments: ${JSON.stringify(instruments)}
+        Theme: ${lyricsTheme}
+        Vocals: ${vocalStyles.join(', ')}
+        Moods: ${moods.join(', ')}`,
       config: {
         systemInstruction,
-        safetySettings: [
-          { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-          { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-          { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-          { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-        ],
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
@@ -116,27 +102,68 @@ export const generateSunoPrompt = async (
       }
     });
 
-    let text = response.text || "";
-    text = text.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    const text = response.text || "{}";
     return JSON.parse(text) as SunoPrompt;
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini Production Error:", error);
     throw error;
   }
 };
 
-export const generateTrackTitle = async (genre: string, vibe: string): Promise<string> => {
-  const apiKey = getApiKey();
-  if (!apiKey) return "New Track";
-  const ai = new GoogleGenAI({ apiKey });
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: `Titolo creativo per un brano ${genre} con vibra ${vibe}. Solo JSON { "title": "..." }.`
-  });
+export const generateLyricSuggestions = async (
+  genres: string[],
+  moods: string[],
+  theme: string
+): Promise<string[]> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const systemInstruction = `
+    Sei un paroliere professionista. Genera 4 brevi suggerimenti lirici (massimo 2-4 righe ciascuno) basati sui generi, mood e tema forniti.
+    I suggerimenti devono essere poetici, ritmici e adatti a essere incollati in una strofa o un ritornello.
+    Lingua: Italiana.
+    Rispondi solo con un array di stringhe JSON.
+  `;
+  
   try {
-    const json = JSON.parse(response.text.replace(/```json|```/g, ''));
-    return json.title;
-  } catch {
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: `Parametri: Generi: ${genres.join(', ')} | Moods: ${moods.join(', ')} | Tema: ${theme || 'Generico'}`,
+      config: {
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.ARRAY,
+          items: { type: Type.STRING }
+        }
+      }
+    });
+    return JSON.parse(response.text || "[]");
+  } catch (error) {
+    console.error("Lyric Suggestion Error:", error);
+    return [];
+  }
+};
+
+export const generateTrackTitle = async (genre: string, vibe: string): Promise<string> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: `Genera un titolo artistico unico per un brano ${genre} con vibrazione ${vibe}.`,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            title: { type: Type.STRING }
+          },
+          required: ["title"]
+        }
+      }
+    });
+    const json = JSON.parse(response.text || "{}");
+    return json.title || "Untitled Track";
+  } catch (error) {
+    console.error("Error generating track title:", error);
     return "Untitled Track";
   }
 };

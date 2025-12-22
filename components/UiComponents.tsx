@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Loader2, Copy, Check } from 'lucide-react';
 
@@ -41,10 +40,17 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   variant = "primary"
 }) => {
-  const baseStyle = "px-6 py-3 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2 active:scale-95";
+  const baseStyle = "relative px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 group overflow-hidden";
   
   const variants = {
-    primary: "bg-gradient-to-r from-green-600 via-yellow-600 to-red-600 hover:from-green-500 hover:via-yellow-500 hover:to-red-500 text-white shadow-lg shadow-red-900/20 border border-transparent",
+    primary: `
+      bg-zinc-950 text-white 
+      before:absolute before:inset-0 before:p-[2px] before:bg-gradient-to-r before:from-green-600 before:via-yellow-600 before:to-red-600 before:rounded-xl before:content-[''] before:z-0
+      after:absolute after:inset-[2px] after:bg-zinc-950 after:rounded-[10px] after:content-[''] after:z-1
+      hover:before:from-red-600 hover:before:via-green-600 hover:before:to-yellow-600
+      shadow-lg shadow-red-900/20 
+      [&>span]:z-10 [&>span]:transition-transform [&>span]:duration-300 group-hover:[&>span]:scale-110
+    `,
     secondary: "bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700",
     outline: "border-2 border-zinc-800 hover:border-green-500 text-zinc-300 hover:text-green-400 bg-transparent"
   };
@@ -55,7 +61,9 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={`${baseStyle} ${variants[variant]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
     >
-      {children}
+      <span className="flex items-center gap-2">
+        {children}
+      </span>
     </button>
   );
 };

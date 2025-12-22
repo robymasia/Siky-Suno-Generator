@@ -1,4 +1,5 @@
-import { GenreOption, SongLength } from './types';
+
+import { GenreOption, SongLength, LengthPreset } from './types';
 
 export const GENRES: GenreOption[] = [
   { id: 'house', label: 'House', color: 'bg-blue-600 hover:bg-blue-500', description: 'Ritmi 4/4 costanti, perfetti per club e groove estivi.' },
@@ -29,6 +30,19 @@ export const GENRES: GenreOption[] = [
   { id: 'epic', label: 'Epic', color: 'bg-amber-600 hover:bg-amber-500', description: 'Grandi orchestre, cori e impatti trailer.' },
   { id: 'jazz', label: 'Jazz', color: 'bg-sky-600 hover:bg-sky-500', description: 'Improvvisazione, accordi complessi e classe pura.' },
   { id: 'blues', label: 'Blues', color: 'bg-indigo-700 hover:bg-indigo-600', description: 'Anima, chitarre slide e la classica struttura a 12 battute.' },
+];
+
+export const MASTERING_STYLES = [
+  'Standard',
+  'Spotify Loudness Optimization',
+  'Club Smash (Aggressive Limiting)',
+  'Warm Vinyl Polish',
+  'Analog Tape Saturation',
+  'Ultra-Wide Stereo Master',
+  'Clean & Transparent Hi-Fi',
+  'Aggressive Mid-Forward',
+  'Silky High-End Polish',
+  'Radio-Ready (Strong Glue)',
 ];
 
 export const GENRE_BPM_RANGES: Record<string, { min: number, max: number, default: number }> = {
@@ -68,6 +82,42 @@ export const SONG_LENGTHS: { id: SongLength; label: string; description: string 
   { id: 'Long', label: 'Long (~5m+)', description: 'Extended club mix' },
 ];
 
+export const LENGTH_PRESETS: LengthPreset[] = [
+  { 
+    id: 'radio_30s', 
+    label: '30s Radio / Reel Edit', 
+    length: 'Short', 
+    arrangement: 'Modern Radio (V-C-V-C-B-C)', 
+    intro: 'Short & Punchy', 
+    outro: 'Hard Stop' 
+  },
+  { 
+    id: 'intro_1m', 
+    label: '1min Intro Edit', 
+    length: 'Short', 
+    arrangement: 'Linear Build (No Chorus)', 
+    intro: 'Extended DJ Intro (32-bar)', 
+    outro: 'Fade Out' 
+  },
+  { 
+    id: 'full_radio', 
+    label: 'Standard Radio (~3m)', 
+    length: 'Medium', 
+    arrangement: 'Pop Classic (I-V-C-V-C-B-C-O)', 
+    intro: 'Standard', 
+    outro: 'Fade Out' 
+  },
+  { 
+    id: 'extended_mix', 
+    label: '5min+ Extended Mix', 
+    length: 'Long', 
+    arrangement: 'Club (I-V-B-D-V-B-D-O)', 
+    intro: 'Extended DJ Intro (32-bar)', 
+    outro: 'DJ Loop (Beat Outro)',
+    breakdown: 'Melodic & Emotional'
+  },
+];
+
 export const INTRO_STYLES = [
   'Standard',
   'Extended DJ Intro (32-bar)',
@@ -82,7 +132,35 @@ export const INTRO_STYLES = [
 export const INTRO_BUILDUPS = [
   'Standard',
   'Short',
+  'Medium',
   'Long'
+];
+
+export const ARRANGEMENT_TYPES = [
+  'Pop Classic (I-V-C-V-C-B-C-O)',
+  'Modern Radio (V-C-V-C-B-C)',
+  'Club (I-V-B-D-V-B-D-O)',
+  'Epic Trailer (I-B-C-B-Climax-O)',
+  'Acoustic (I-V-C-V-C-O)',
+  'Linear Build (No Chorus)',
+  'Complex Progressive'
+];
+
+export const BRIDGE_STYLES = [
+  'Emotional Pivot',
+  'High Energy Peak',
+  'Minimal & Ambient',
+  'Rhythmic/Rap Section',
+  'Instrumental Solo',
+  'Atmospheric Interlude',
+  'Experimental/Glitch'
+];
+
+export const SECTION_ENERGY = [
+  'Low',
+  'Steady',
+  'Rising',
+  'Explosive'
 ];
 
 export const OUTRO_STYLES = [
@@ -122,15 +200,18 @@ export const BREAKDOWN_INTENSITIES = [
 ];
 
 export const STRUCTURE_DESCRIPTIONS: Record<string, string> = {
-  'Standard': 'Bilanciamento classico per il genere.',
-  'Low': 'Sottile e minimale, mantiene l\'energia bassa.',
-  'Medium': 'Equilibrato, con un impatto moderato.',
-  'High': 'Massima energia e tensione drammatica.',
-  'Short': 'Transizione rapida verso la sezione successiva.',
-  'Long': 'Build-up o evoluzione lenta e progressiva.',
-  'Slow Fade': 'Sfumatura graduale del volume finale.',
-  'Abrupt Stop': 'Fine secca e improvvisa del brano.',
-  'Echoing Decay': 'Coda finale ricca di delay e riverbero.'
+  'Standard': 'Bilanciamento di default.',
+  'Low': 'Riduce drasticamente la densità del mix.',
+  'Medium': 'Livello di energia o durata intermedia.',
+  'High': 'Massima spinta sonora e stratificazione.',
+  'Short': 'Transizione rapida e incisiva (4-8 battute).',
+  'Long': 'Progressione estesa (16-32 battute).',
+  'Extended DJ Intro (32-bar)': 'Crea una lunga sezione ritmica iniziale.',
+  'Atmospheric Build-up': 'Inizia con pad eterei e riverberi.',
+  'Fade Out': 'Decremento logaritmico del volume generale.',
+  'Slow Fade': 'Dissolvenza estremamente lenta e sognante.',
+  'Abrupt Stop': 'Termina il brano istantaneamente.',
+  'Echoing Decay': 'Decade nel silenzio con code di delay.',
 };
 
 export const GENRE_INSTRUMENTS: Record<string, string[]> = {
@@ -163,6 +244,19 @@ export const GENRE_INSTRUMENTS: Record<string, string[]> = {
   jazz: ['Upright Bass', 'Grand Piano', 'Saxophone', 'Trumpet', 'Brushes Drum Kit', 'Hollow Body Guitar', 'Vibraphone', 'Clarinet', 'Trombone', 'String Quartet', 'Flute', 'Accordion'],
   blues: ['Electric Guitar', 'Harmonica', 'Slide Guitar', 'Hammond Organ', 'Bass Guitar', 'Drum Kit', 'Acoustic Guitar', 'Piano', 'Brass Section'],
 };
+
+export const PRO_MIX_TECHNIQUES = [
+  'Sidechain Compression',
+  'Filter Sweep Up',
+  'Vocal Reverb Throw',
+  'Stereo Hi-Hats',
+  'Low-End Mono Sum',
+  'Pump Effect',
+  'Rumble Bass EQ',
+  'Industrial Distortion',
+  'Transient Shaping',
+  'Dark Reverb Automation'
+];
 
 export const GENRE_SOUND_DESIGN: Record<string, string[]> = {
   house: ['Filter Sweeps', 'Sidechain Pump', 'Vinyl Hiss', 'Disco Stabs', 'Vocal Chops', 'Lo-Fi Texture'],
@@ -219,7 +313,7 @@ export const GENRE_MIX_MASTER: Record<string, string[]> = {
   edm: ['Hard Limiting', 'Pitch Riser', 'Drop Volume Boost', 'Stereo Widener', 'CO2 Cannon FX', 'Sidechain Ducking'],
   hiphop: ['Parallel Compression', 'Tape Saturation', 'Vocal Presence Boost', 'Kick Transient', 'Low-Pass Filter Intro', 'Vinyl Crackle'],
   trap: ['808 Distortion', 'Hard Clipper', 'Hi-Hat Rolls Pan', 'Vocal Stutter', 'Half-time Effect', 'Sub Bass Glue'],
-  drill: ['Sliding 808 Pitch', 'Dark Plate Reverb', 'Snare EQ Boost', 'Vocal Chop Delay', 'Stereo Width', 'Glide Automation'],
+  drill: ['Sliding 808s', 'Hi-Hat Triplets', 'Dark Plate Reverb', 'Snare EQ Boost', 'Vocal Chop Delay', 'Stereo Width', 'Glide Automation'],
   cinematic: ['Dynamic Range Expansion', 'Orchestral Hall Reverb', 'Sub-Bass Boom', 'Volume Swells', 'Section Panning', 'Epic Impact'],
   epic: ['Hybrid Impact Compression', 'Brass Swell', 'Trailer Hits', 'Master Bus Glue', 'Braam Distortion', 'Risky Dynamic Range'],
   jazz: ['Room Reverb', 'Warm Tube EQ', 'Dynamic Mic Compression', 'Tape Hiss', 'Natural Panning', 'Live Room Feel'],
@@ -252,6 +346,8 @@ export const MOODS = [
 
 export const VOCAL_STYLES = [
   'Auto-tuned',
+  'Barbershop Quartet',
+  'Beatboxing',
   'Chanting',
   'Choir',
   'Church Choir',
@@ -261,7 +357,7 @@ export const VOCAL_STYLES = [
   'Falsetto',
   'Female Soprano',
   'Female Vocals',
-  'Gospel',
+  'Gospel Choir',
   'Gritty',
   'Growling',
   'Instrumental (No Vocals)',
@@ -275,11 +371,15 @@ export const VOCAL_STYLES = [
   'Pop Diva',
   'Rapping',
   'Robotic/Vocoder',
+  'Scat Singing',
   'Screamo',
   'Shouting/Screaming',
-  'Soulful',
+  'Soulful Ad-libs',
   'Spoken Word',
-  'Whispering'
+  'Throat Singing',
+  'Vocaloid Style',
+  'Whispering',
+  'Yodeling'
 ];
 
 export const VOCAL_EFFECTS = [
@@ -330,11 +430,19 @@ export const ROLE_DESCRIPTIONS: Record<string, string> = {
 
 export const VOCAL_STYLE_DESCRIPTIONS: Record<string, string> = {
   'Auto-tuned': 'Voce moderna con correzione d\'intonazione marcata.',
+  'Barbershop Quartet': 'Ensemble di quattro voci maschili con armonie strette a cappella.',
+  'Beatboxing': 'Percussioni vocali e suoni ritmici prodotti esclusivamente con la bocca.',
   'Chanting': 'Canto ritmico e ripetitivo, quasi tribale.',
   'Ethereal': 'Voce celestiale, leggera e ricca di riverbero.',
-  'Soulful': 'Canto espressivo e pieno di emozione.',
-  'Spoken Word': 'Testo parlato, stile narrativo o poetico.',
-  'Robotic/Vocoder': 'Suono elettronico e sintetico della voce.'
+  'Gospel Choir': 'Potente ensemble corale con grande energia spirituale e dinamica.',
+  'Opera': 'Canto lirico classico con tecnica di proiezione vocale e vibrato drammatico.',
+  'Scat Singing': 'Improvvisazione vocale jazz con sillabe senza senso ritmiche.',
+  'Soulful Ad-libs': 'Espressioni vocali estemporanee cariche di emozione tra le frasi principali.',
+  'Spoken Word': 'Testo parlato, stile narrativo o poetico, simile allo slam poetry.',
+  'Throat Singing': 'Canto armonico profondo e gutturale tipico della tradizione mongola o tibetana.',
+  'Vocaloid Style': 'Voce sintetizzata, robotica ma melodica tipica del pop giapponese moderno.',
+  'Robotic/Vocoder': 'Suono elettronico e sintetico della voce.',
+  'Yodeling': 'Canto che alterna rapidamente toni bassi di petto e toni alti di testa.'
 };
 
 export const PLACEHOLDER_PROMPT = {
