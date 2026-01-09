@@ -1,5 +1,5 @@
-import React from 'react';
 import { Loader2, Copy, Check } from 'lucide-react';
+import React from 'react';
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -15,11 +15,22 @@ export const Tooltip: React.FC<TooltipProps> = ({
   return (
     <div className={`group relative inline-block ${className}`}>
       {children}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block z-[9999] pointer-events-none w-max max-w-[260px] animate-in fade-in zoom-in-95 duration-200 origin-bottom">
-        <div className="bg-zinc-900/98 backdrop-blur-xl border border-zinc-700/80 text-zinc-100 text-[11px] font-semibold rounded-xl px-4 py-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-center leading-relaxed">
-          {content}
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 hidden group-hover:block z-[9999] pointer-events-none w-max max-w-[280px] animate-in fade-in zoom-in-95 slide-in-from-bottom-2 duration-200 origin-bottom">
+        {/* Shadow Glow Effect */}
+        <div className="absolute inset-0 bg-green-500/10 blur-xl rounded-2xl -z-10"></div>
+        
+        {/* Main Content Container */}
+        <div className="relative bg-zinc-950/90 backdrop-blur-2xl border border-zinc-700/50 text-zinc-100 rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] overflow-hidden">
+          {/* Subtle Accent Line */}
+          <div className="h-0.5 w-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 opacity-80"></div>
+          
+          <div className="px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-center leading-relaxed">
+            {content}
+          </div>
         </div>
-        <div className="w-3 h-3 bg-zinc-900/98 border-r border-b border-zinc-700/80 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1.5 shadow-sm"></div>
+
+        {/* Improved Arrow */}
+        <div className="w-3 h-3 bg-zinc-950/90 border-r border-b border-zinc-700/50 transform rotate-45 absolute left-1/2 -translate-x-1/2 -bottom-1.5 shadow-sm"></div>
       </div>
     </div>
   );
@@ -68,7 +79,7 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export const CopyButton = ({ text }: { text: string }) => {
+export const CopyButton = ({ text, size = 18, className = "" }: { text: string; size?: number; className?: string }) => {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = async () => {
@@ -84,17 +95,20 @@ export const CopyButton = ({ text }: { text: string }) => {
   return (
     <button
       onClick={handleCopy}
-      className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-green-400 transition-colors border border-zinc-800"
+      className={`p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-green-400 transition-colors border border-zinc-800 flex items-center justify-center ${className}`}
       title="Copy to clipboard"
     >
-      {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+      {copied ? <Check size={size} className="text-green-500" /> : <Copy size={size} />}
     </button>
   );
 };
 
 export const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center py-12 space-y-4">
-    <Loader2 className="w-10 h-10 text-yellow-500 animate-spin" />
-    <p className="text-zinc-500 text-sm animate-pulse font-bold uppercase tracking-widest">Generating SIKY vibes...</p>
+    <div className="relative">
+      <div className="absolute inset-0 bg-yellow-500/20 blur-xl rounded-full animate-pulse"></div>
+      <Loader2 className="w-12 h-12 text-yellow-500 animate-spin relative z-10" />
+    </div>
+    <p className="text-zinc-500 text-xs font-black uppercase tracking-[0.2em] animate-pulse">Generating SIKY vibes...</p>
   </div>
 );

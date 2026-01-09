@@ -1,6 +1,22 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { SunoPrompt, GenreWeight, InstrumentSettings } from '../types';
+import { SunoPrompt, GenreWeight, InstrumentSettings, GranularStructure } from '../types';
+
+async function withRetry<T>(task: () => Promise<T>, maxRetries: number = 3): Promise<T> {
+  let lastError: any;
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await task();
+    } catch (err: any) {
+      lastError = err;
+      const isRetryable = err.status === 'UNKNOWN' || err.code === 500 || err.message?.includes('Rpc failed');
+      if (!isRetryable || i === maxRetries - 1) break;
+      const delay = Math.pow(2, i) * 1000 + Math.random() * 500;
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+  throw lastError;
+}
 
 export const generateSunoPrompt = async (
   genres: GenreWeight[], 
@@ -12,79 +28,67 @@ export const generateSunoPrompt = async (
   keySignature: string = '',
   bpm: number = 120,
   soundDesign: string[] = [],
-  automations: string[] = [],
-  introStyle: string = 'Standard',
+  mixStyleDirective: string = '',
+  masterTargetDirective: string = '',
   introBuildup: string = 'Standard',
-  outroStyle: string = 'Standard',
   outroFade: string = 'Standard',
   breakdownType: string = 'Standard',
-  breakdownIntensity: string = 'Standard',
   arrangement: string = 'Standard',
-  bridgeStyle: string = 'Standard',
-  verseEnergy: string = 'Steady',
-  chorusEnergy: string = 'Rising',
   lyricsTheme: string = '',
-  masteringStyle: string = 'Standard'
+  granularStructure?: GranularStructure,
+  isInstrumental: boolean = false
 ): Promise<SunoPrompt> => {
   
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
+  const isTechnoSelected = genres.some(g => g.name.toLowerCase().includes('techno'));
+  const genreBlendDescription = genres
+    .map(g => `${g.weight}% ${g.name}`)
+    .join(' mixed with ');
 
   const systemInstruction = `
-    Sei il miglior Senior Music Producer e Prompt Engineer al mondo per Suno AI v4/v5.
-    Il tuo obiettivo è creare un "Producer Blueprint" impeccabile, ordinato e tecnicamente avanzato.
+    You are the "SIKY MASTER ARCHITECT" - The world's most advanced prompt engineer for Suno AI (v4/v5).
+    
+    --- MANDATORY PREFIXES (STRICT COMPLIANCE) ---
+    1. The 'styleParams' output MUST START with: ///***///
+    2. The 'lyricsAndStructure' output MUST START with: [Is_MAX_MODE: MAX](MAX) [QUALITY: MAX](MAX) [REALISM: MAX](MAX) [REAL_INSTRUMENTS: MAX](MAX) [REAL_VOCALS: MAX](MAX)
 
-    --- LOGICA DI STRUTTURA E ORDINE (MANDATORIA) ---
-    Il campo 'lyricsAndStructure' deve essere organizzato come un vero foglio di produzione professionale:
+    --- SPECIAL PROTOCOL: TECHNO BLEND ---
+    ${isTechnoSelected ? `
+    - GENRE DETECTED: TECHNO FAMILY. Priority: HYPNOTIC MINIMALISM & SONIC TEXTURE.
+    - LYRICS: Must be extremely minimal. Max 2 short lines per section. Focus on rhythmic repetition, atmospheric whispers, or industrial echoes.
+    - MUSIC: Hyper-detailed technical instructions are MANDATORY. Describe: [VCF Filter Sweeps], [303 Resonant Squelch], [Sidechain Ducking], [Modular FM Modulation], [Rumble Kick processing], [Delay Feedback Swells].
+    - Focus on the slow progression of filter cutoff and automation over time.
+    ` : `
+    - PRIORITY: Professional Narrative. Create compelling lyrics with a logical story arc and real-life emotional weight.
+    `}
 
-    1. INTESTAZIONE TECNICA (Top of the text):
-       # TRACK PROFILE
-       # ARRANGEMENT: ${arrangement}
-       # TARGET: ${length} Duration
-       # KEY: [Seleziona la tonalità migliore se 'Any Key']
-       # BPM: ${bpm}
-       # GENRE FUSION: [Descrizione dettagliata della fusione dei generi basata sui pesi]
+    --- HYBRID GENRE ALCHEMY ---
+    - Seamlessly blend: ${genreBlendDescription}.
+    - Explain the interaction: e.g. "The industrial weight of ${genres[0].name} meets the soulful warmth of ${genres[1]?.name || 'the sub-style'}".
+    - Instrumentation should reflect the percentage weights provided.
 
-    2. FORMATO DELLE SEZIONI:
-       Ogni sezione deve iniziare con un tag Suno ottimizzato:
-       [SECTION_NAME: Sub-style, Technical details, Energy level]
-       (Producer Note: Istruzioni specifiche su strumenti: ${instruments.map(i => i.name).join(', ')} e sound design: ${soundDesign.join(', ')})
+    --- CRITICAL FORMATTING ---
+    - ALL technical/musical tags MUST be in SQUARE BRACKETS: [TAG].
+    - ALL backing vocals/harmonies MUST be in PARENTHESES: (Vocal).
+    - NEVER let the AI include instructions like "Intro:" as singable text.
 
-    3. REGOLE DI IMPAGINAZIONE:
-       - Lascia ESATTAMENTE due righe vuote tra una sezione e l'altra.
-       - Il testo deve essere diviso in quartine o strofe coerenti.
-       - Le note del produttore (Producer Notes) devono essere sempre tra parentesi tonde subito sotto il tag della sezione.
-
-    --- VINCOLO LUNGHEZZA ("${length}") ---
-    - "Short": ~12 righe di testo. Struttura: [Intro] -> [Verse] -> [Chorus] -> [Outro].
-    - "Medium": ~25-30 righe. Struttura radio standard completa.
-    - "Long": +40 righe. Struttura estesa con molteplici strofe, bridge lunghi e sezioni strumentali/breakdown ampi.
-
-    --- LOGICA DI FUSIONE GENERI ---
-    Analizza i pesi: ${JSON.stringify(genres)}.
-    Specifica come i generi interagiscono (es. "Ritmica ${genres[0]?.name} con armonie ${genres[1]?.name || 'pure'}").
-
-    --- CAMPO STYLE (STYLE PARAMS) ---
-    Deve essere una stringa densa di tag per Suno (max 120-150 caratteri):
-    "[Hybrid Genre Descriptor], ${bpm}BPM, [Key], [Moods], [Vocal Style], [Specific Instruments], [Mix Techniques]"
-
-    --- LIRICHE ---
-    Crea testi basati su: "${lyricsTheme}". Se vuoto, inventa un tema profondo e coerente con i generi scelti. Sii poetico.
-
-    Rispondi esclusivamente in JSON.
+    --- OUTPUT SCHEMA ---
+    Return JSON only with fields: title, genre, styleParams, lyricsAndStructure, vibeDescription.
   `;
 
-  try {
+  return withRetry(async () => {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Parametri Utente:
-        Length: ${length}
-        Genres: ${JSON.stringify(genres)}
-        BPM/Key: ${bpm} / ${keySignature}
-        Arrangement: ${arrangement}
-        Instruments: ${JSON.stringify(instruments)}
-        Theme: ${lyricsTheme}
-        Vocals: ${vocalStyles.join(', ')}
-        Moods: ${moods.join(', ')}`,
+      model: "gemini-3-pro-preview",
+      contents: `Generate a masterpiece track with these details:
+      Genres & Weights: ${JSON.stringify(genres)}
+      Moods: ${moods.join(', ')}
+      Instruments: ${JSON.stringify(instruments)}
+      Mix Style: ${mixStyleDirective}
+      Mastering: ${masterTargetDirective}
+      Key: ${keySignature} | BPM: ${bpm}
+      Theme: ${lyricsTheme || 'A cinematic soundscape of lived experience'}
+      Instrumental: ${isInstrumental}`,
       config: {
         systemInstruction,
         responseMimeType: "application/json",
@@ -101,69 +105,112 @@ export const generateSunoPrompt = async (
         }
       }
     });
+    
+    const data = JSON.parse(response.text.trim());
+    
+    // Prefix cleaning logic
+    if (!data.styleParams.startsWith('///***///')) {
+      data.styleParams = `///***/// ${data.styleParams}`;
+    }
+    const maxHeader = `[Is_MAX_MODE: MAX](MAX) [QUALITY: MAX](MAX) [REALISM: MAX](MAX) [REAL_INSTRUMENTS: MAX](MAX) [REAL_VOCALS: MAX](MAX)\n\n`;
+    if (!data.lyricsAndStructure.includes('[Is_MAX_MODE: MAX]')) {
+      data.lyricsAndStructure = maxHeader + data.lyricsAndStructure;
+    }
 
-    const text = response.text || "{}";
-    return JSON.parse(text) as SunoPrompt;
-  } catch (error) {
-    console.error("Gemini Production Error:", error);
-    throw error;
-  }
+    return data as SunoPrompt;
+  });
 };
 
-export const generateLyricSuggestions = async (
-  genres: string[],
-  moods: string[],
-  theme: string
-): Promise<string[]> => {
+export const regenerateSongTitle = async (genres: string[], moods: string[], theme: string): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const systemInstruction = `
-    Sei un paroliere professionista. Genera 4 brevi suggerimenti lirici (massimo 2-4 righe ciascuno) basati sui generi, mood e tema forniti.
-    I suggerimenti devono essere poetici, ritmici e adatti a essere incollati in una strofa o un ritornello.
-    Lingua: Italiana.
-    Rispondi solo con un array di stringhe JSON.
-  `;
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: `Based on these genres: ${genres.join(', ')}, moods: ${moods.join(', ')}, and theme: ${theme}, suggest a single powerful, evocative, and artistic song title. Respond with only the title string.`,
+  });
+  return response.text.trim().replace(/^"|"$/g, '');
+};
+
+export const generateLyricSuggestions = async (genres: string[], moods: string[], vocalStyles: string[], theme: string): Promise<string[]> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const isTechno = genres.some(g => g.toLowerCase().includes('techno'));
   
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Parametri: Generi: ${genres.join(', ')} | Moods: ${moods.join(', ')} | Tema: ${theme || 'Generico'}`,
-      config: {
-        systemInstruction,
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.ARRAY,
-          items: { type: Type.STRING }
-        }
+  const systemInstruction = `
+    You are a professional songwriter specializing in "Lived-Life Narratives" (Vita Vissuta).
+    
+    Your task: Suggest 4 highly emotional and specific lyrical themes/narratives for a song.
+    
+    - IF TECHNO: Focus on the "Hypnotic Machine" aspect - minimal, gritty, industrial, or lonely urban landscapes.
+    - IF POP/ROCK/URBAN: Create deep stories about real human experiences, broken hearts, street struggles, nostalgic memories of old cities, or late-night reflections.
+    - AVOID generic clichés like "I'm dancing in the club". Use sensory details (smell of rain, neon flickering, cold concrete, warm embrace).
+    - Ensure suggestions vary in emotional intensity.
+    
+    Return JSON only: { "suggestions": ["narrative 1", "narrative 2", "narrative 3", "narrative 4"] }
+  `;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: `Suggest themes for these parameters:
+    Genres: ${genres.join(', ')}
+    Moods: ${moods.join(', ')}
+    Current Theme/Vibe: ${theme || 'Deep human emotion'}`,
+    config: {
+      systemInstruction,
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: { suggestions: { type: Type.ARRAY, items: { type: Type.STRING } } },
+        required: ["suggestions"]
       }
-    });
-    return JSON.parse(response.text || "[]");
-  } catch (error) {
-    console.error("Lyric Suggestion Error:", error);
-    return [];
-  }
+    }
+  });
+  return JSON.parse(response.text.trim()).suggestions;
 };
 
-export const generateTrackTitle = async (genre: string, vibe: string): Promise<string> => {
+export const suggestInstruments = async (genres: GenreWeight[], moods: string[]): Promise<InstrumentSettings[]> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Genera un titolo artistico unico per un brano ${genre} con vibrazione ${vibe}.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            title: { type: Type.STRING }
-          },
-          required: ["title"]
+  const genreStr = genres.map(g => `${g.weight}% ${g.name}`).join(' + ');
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: `Suggest 5 professional instruments for a hybrid blend of ${genreStr} with a ${moods.join('/')} vibe. Include specific world or vintage instruments where appropriate.`,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.ARRAY,
+        items: { 
+          type: Type.OBJECT, 
+          properties: { 
+            name: { type: Type.STRING }, 
+            role: { type: Type.STRING }, 
+            intensity: { type: Type.STRING } 
+          }, 
+          required: ['name', 'role', 'intensity'] 
         }
       }
-    });
-    const json = JSON.parse(response.text || "{}");
-    return json.title || "Untitled Track";
-  } catch (error) {
-    console.error("Error generating track title:", error);
-    return "Untitled Track";
-  }
+    }
+  });
+  return JSON.parse(response.text.trim());
+};
+
+export const suggestStructure = async (genres: GenreWeight[], moods: string[], length: string): Promise<GranularStructure> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: `Suggest professional granular structure for a ${length} duration track in ${genres.map(g => g.name).join(' + ')}.`,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          intro: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] },
+          verse: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] },
+          chorus: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] },
+          bridge: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] },
+          breakdown: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] },
+          outro: { type: Type.OBJECT, properties: { durationSeconds: { type: Type.INTEGER }, energy: { type: Type.STRING } }, required: ['durationSeconds', 'energy'] }
+        },
+        required: ['intro', 'verse', 'chorus', 'bridge', 'breakdown', 'outro']
+      }
+    }
+  });
+  return JSON.parse(response.text.trim());
 };

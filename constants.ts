@@ -1,80 +1,332 @@
 
-import { GenreOption, SongLength, LengthPreset } from './types';
+import { GenreOption, SongLength, GranularStructure, StructurePreset } from './types';
 
 export const GENRES: GenreOption[] = [
-  { id: 'house', label: 'House', color: 'bg-blue-600 hover:bg-blue-500', description: 'Ritmi 4/4 costanti, perfetti per club e groove estivi.' },
-  { id: 'techno', label: 'Techno', color: 'bg-slate-700 hover:bg-slate-600', description: 'Suoni industriali, ipnotici e sintetici ad alta energia.' },
-  { id: 'trance', label: 'Trance', color: 'bg-cyan-600 hover:bg-cyan-500', description: 'Melodie euforiche, pad atmosferici e build-up epici.' },
-  { id: 'pop', label: 'Pop', color: 'bg-pink-500 hover:bg-pink-400', description: 'Melodie orecchiabili e strutture radio-friendly.' },
-  { id: 'kpop', label: 'K-Pop', color: 'bg-fuchsia-500 hover:bg-fuchsia-400', description: 'Fusione di generi, produzione massimalista e stile coreano.' },
-  { id: 'reggaeton', label: 'Reggaeton', color: 'bg-orange-500 hover:bg-orange-400', description: 'Il classico ritmo Dembow con vibrazioni tropicali.' },
-  { id: 'latin', label: 'Latin', color: 'bg-red-500 hover:bg-red-400', description: 'Strumentazione organica, fiati e ritmi calienti.' },
-  { id: 'rock', label: 'Rock', color: 'bg-stone-700 hover:bg-stone-600', description: 'Chitarre elettriche, batterie potenti e attitudine ribelle.' },
-  { id: 'metal', label: 'Metal', color: 'bg-zinc-800 hover:bg-zinc-700', description: 'Distorsione estrema, ritmi veloci e potenza sonora.' },
-  { id: 'rnb', label: 'R&B', color: 'bg-violet-600 hover:bg-violet-500', description: 'Ritmi caldi, armonie vocali e groove vellutati.' },
-  { id: 'soul', label: 'Soul', color: 'bg-amber-700 hover:bg-amber-600', description: 'Emozione pura, radici gospel e calore analogico.' },
-  { id: 'funk', label: 'Funk', color: 'bg-yellow-600 hover:bg-yellow-500', description: 'Slap bass, chitarre ritmiche e groove irresistibili.' },
-  { id: 'disco', label: 'Disco', color: 'bg-yellow-500 hover:bg-yellow-400', description: 'Basso in ottave, archi e luci stroboscopiche.' },
-  { id: 'country', label: 'Country', color: 'bg-orange-700 hover:bg-orange-600', description: 'Storytelling, chitarre acustiche e stile Nashville.' },
-  { id: 'dancehall', label: 'Dancehall', color: 'bg-yellow-600 hover:bg-yellow-500', description: 'Ritmo caraibico moderno, basso profondo e sirene.' },
-  { id: 'reggae', label: 'Reggae', color: 'bg-green-600 hover:bg-green-500', description: 'Ritmo in levare, messaggi positivi e linee di basso dub.' },
-  { id: 'dubstep', label: 'Dubstep', color: 'bg-purple-600 hover:bg-purple-500', description: 'Wobble bass, drop aggressivi e percussioni pesanti.' },
-  { id: 'dnb', label: 'Drum & Bass', color: 'bg-red-600 hover:bg-red-500', description: 'Ritmi frenetici a 174 BPM e bassi profondi.' },
-  { id: 'synthwave', label: 'Synthwave', color: 'bg-fuchsia-600 hover:bg-fuchsia-500', description: 'Estetica anni 80, sintetizzatori analogici e neon.' },
-  { id: 'ambient', label: 'Ambient', color: 'bg-teal-600 hover:bg-teal-500', description: 'Texture rilassanti, droni e paesaggi sonori immensi.' },
-  { id: 'edm', label: 'Mainstage EDM', color: 'bg-indigo-600 hover:bg-indigo-500', description: 'Suoni da festival, grandi drop e energia pura.' },
-  { id: 'hiphop', label: 'Hip Hop', color: 'bg-orange-600 hover:bg-orange-500', description: 'Beat classici, campionamenti e stile urban.' },
-  { id: 'trap', label: 'Trap', color: 'bg-rose-600 hover:bg-rose-500', description: 'Hi-hats veloci, rullanti pesanti e bassi 808.' },
-  { id: 'drill', label: 'Drill', color: 'bg-stone-600 hover:bg-stone-500', description: 'Atmosfere oscure, bassi scivolati e testi crudi.' },
-  { id: 'cinematic', label: 'Cinematic', color: 'bg-slate-500 hover:bg-slate-400', description: 'Musica da film, archi orchestrali e tensione epica.' },
-  { id: 'epic', label: 'Epic', color: 'bg-amber-600 hover:bg-amber-500', description: 'Grandi orchestre, cori e impatti trailer.' },
-  { id: 'jazz', label: 'Jazz', color: 'bg-sky-600 hover:bg-sky-500', description: 'Improvvisazione, accordi complessi e classe pura.' },
-  { id: 'blues', label: 'Blues', color: 'bg-indigo-700 hover:bg-indigo-600', description: 'Anima, chitarre slide e la classica struttura a 12 battute.' },
+  // --- ELECTRONIC: HOUSE ---
+  { id: 'house', label: 'Classic House', color: 'bg-blue-600' },
+  { id: 'deep_house', label: 'Deep House', color: 'bg-blue-800' },
+  { id: 'tech_house', label: 'Tech House', color: 'bg-cyan-700' },
+  { id: 'progressive_house', label: 'Progressive House', color: 'bg-sky-600' },
+  { id: 'future_house', label: 'Future House', color: 'bg-emerald-600' },
+  { id: 'slap_house', label: 'Slap House', color: 'bg-indigo-600' },
+  { id: 'soulful_house', label: 'Soulful House', color: 'bg-amber-600' },
+  { id: 'afro_house', label: 'Afro House', color: 'bg-orange-800' },
+  { id: 'g_house', label: 'G-House', color: 'bg-zinc-800' },
+  { id: 'electro_house', label: 'Electro House', color: 'bg-yellow-500' },
+
+  // --- ELECTRONIC: TECHNO ---
+  { id: 'techno', label: 'Techno', color: 'bg-slate-700' },
+  { id: 'minimal_techno', label: 'Minimal Techno', color: 'bg-slate-800' },
+  { id: 'melodic_techno', label: 'Melodic Techno', color: 'bg-indigo-900' },
+  { id: 'acid_techno', label: 'Acid Techno', color: 'bg-lime-700' },
+  { id: 'hard_techno', label: 'Hard Techno', color: 'bg-red-950' },
+  { id: 'industrial_techno', label: 'Industrial Techno', color: 'bg-stone-900' },
+  { id: 'dub_techno', label: 'Dub Techno', color: 'bg-teal-900' },
+  { id: 'detroit_techno', label: 'Detroit Techno', color: 'bg-blue-900' },
+
+  // --- ELECTRONIC: BASS & DNB ---
+  { id: 'dnb', label: 'Drum and Bass', color: 'bg-red-700' },
+  { id: 'liquid_dnb', label: 'Liquid DnB', color: 'bg-blue-400' },
+  { id: 'neurofunk', label: 'Neurofunk', color: 'bg-zinc-900' },
+  { id: 'dubstep', label: 'Dubstep', color: 'bg-purple-800' },
+  { id: 'uk_garage', label: 'UK Garage', color: 'bg-amber-500' },
+  { id: 'future_bass', label: 'Future Bass', color: 'bg-pink-400' },
+  { id: 'trap_edm', label: 'EDM Trap', color: 'bg-rose-700' },
+
+  // --- ELECTRONIC: TRANCE & PSY ---
+  { id: 'trance', label: 'Trance', color: 'bg-cyan-500' },
+  { id: 'psytrance', label: 'Psytrance', color: 'bg-purple-600' },
+  { id: 'vocal_trance', label: 'Vocal Trance', color: 'bg-sky-300' },
+  { id: 'uplifting_trance', label: 'Uplifting Trance', color: 'bg-blue-300' },
+
+  // --- URBAN: HIP HOP & RAP ---
+  { id: 'hiphop', label: 'Hip Hop', color: 'bg-orange-600' },
+  { id: 'trap', label: 'Modern Trap', color: 'bg-rose-600' },
+  { id: 'boom_bap', label: 'Boom Bap', color: 'bg-stone-800' },
+  { id: 'drill', label: 'Drill', color: 'bg-zinc-900' },
+  { id: 'lofi_hiphop', label: 'Lofi Hip Hop', color: 'bg-indigo-400' },
+  { id: 'cloud_rap', label: 'Cloud Rap', color: 'bg-sky-200' },
+  { id: 'grime', label: 'Grime', color: 'bg-lime-800' },
+
+  // --- URBAN: R&B & SOUL ---
+  { id: 'rnb', label: 'Contemporary R&B', color: 'bg-violet-800' },
+  { id: 'neo_soul', label: 'Neo-Soul', color: 'bg-fuchsia-900' },
+  { id: 'soul', label: 'Classic Soul', color: 'bg-red-800' },
+  { id: 'funk', label: 'Funk', color: 'bg-yellow-600' },
+  { id: 'disco', label: 'Disco', color: 'bg-pink-500' },
+
+  // --- ROCK & PUNK ---
+  { id: 'rock', label: 'Classic Rock', color: 'bg-stone-700' },
+  { id: 'alt_rock', label: 'Alternative Rock', color: 'bg-emerald-700' },
+  { id: 'indie_rock', label: 'Indie Rock', color: 'bg-green-600' },
+  { id: 'punk', label: 'Punk Rock', color: 'bg-red-600' },
+  { id: 'pop_punk', label: 'Pop Punk', color: 'bg-pink-600' },
+  { id: 'hard_rock', label: 'Hard Rock', color: 'bg-orange-900' },
+  { id: 'grunge', label: 'Grunge', color: 'bg-stone-600' },
+  { id: 'psychedelic_rock', label: 'Psychedelic Rock', color: 'bg-purple-500' },
+  { id: 'progressive_rock', label: 'Prog Rock', color: 'bg-cyan-800' },
+  { id: 'post_rock', label: 'Post Rock', color: 'bg-slate-400' },
+
+  // --- METAL ---
+  { id: 'heavy_metal', label: 'Heavy Metal', color: 'bg-zinc-800' },
+  { id: 'thrash_metal', label: 'Thrash Metal', color: 'bg-red-900' },
+  { id: 'death_metal', label: 'Death Metal', color: 'bg-black' },
+  { id: 'black_metal', label: 'Black Metal', color: 'bg-gray-950' },
+  { id: 'power_metal', label: 'Power Metal', color: 'bg-yellow-700' },
+  { id: 'doom_metal', label: 'Doom Metal', color: 'bg-purple-950' },
+  { id: 'nu_metal', label: 'Nu Metal', color: 'bg-stone-900' },
+
+  // --- REGGAE & CARIBBEAN ---
+  { id: 'reggae', label: 'Reggae', color: 'bg-green-700' },
+  { id: 'reggae_roots', label: 'Roots Reggae', color: 'bg-yellow-600' },
+  { id: 'dub', label: 'Dub', color: 'bg-emerald-900' },
+  { id: 'dancehall', label: 'Dancehall', color: 'bg-red-700' },
+  { id: 'ska', label: 'Ska', color: 'bg-zinc-600' },
+  { id: 'rocksteady', label: 'Rocksteady', color: 'bg-orange-500' },
+  { id: 'soca', label: 'Soca', color: 'bg-pink-400' },
+
+  // --- LATIN & WORLD ---
+  { id: 'reggaeton', label: 'Reggaeton', color: 'bg-orange-400' },
+  { id: 'salsa', label: 'Salsa', color: 'bg-red-500' },
+  { id: 'bachata', label: 'Bachata', color: 'bg-rose-400' },
+  { id: 'bossa_nova', label: 'Bossa Nova', color: 'bg-teal-400' },
+  { id: 'afrobeats', label: 'Afrobeats', color: 'bg-orange-500' },
+  { id: 'flamenco', label: 'Flamenco', color: 'bg-amber-900' },
+  { id: 'kpop', label: 'K-Pop', color: 'bg-fuchsia-400' },
+  { id: 'jpop', label: 'J-Pop', color: 'bg-blue-200' },
+
+  // --- JAZZ & BLUES ---
+  { id: 'jazz', label: 'Classic Jazz', color: 'bg-sky-700' },
+  { id: 'swing', label: 'Swing', color: 'bg-yellow-300' },
+  { id: 'bebop', label: 'Bebop', color: 'bg-indigo-700' },
+  { id: 'jazz_fusion', label: 'Jazz Fusion', color: 'bg-cyan-600' },
+  { id: 'blues', label: 'Classic Blues', color: 'bg-blue-900' },
+  { id: 'rock_blues', label: 'Blues Rock', color: 'bg-slate-800' },
+
+  // --- CLASSICAL & CINEMATIC ---
+  { id: 'classical', label: 'Symphonic Classical', color: 'bg-amber-800' },
+  { id: 'baroque', label: 'Baroque', color: 'bg-yellow-800' },
+  { id: 'opera', label: 'Opera', color: 'bg-red-900' },
+  { id: 'cinematic', label: 'Cinematic Score', color: 'bg-zinc-700' },
+  { id: 'ambient', label: 'Ambient', color: 'bg-teal-600' },
+  { id: 'modern_classical', label: 'Modern Classical', color: 'bg-slate-500' },
+
+  // --- ITALIAN SCENE ---
+  { id: 'trap_ita', label: 'Trap Italia', color: 'bg-red-600' },
+  { id: 'rap_ita', label: 'Hip Hop ITA', color: 'bg-stone-800' },
+  { id: 'cantautore', label: 'Cantautore ITA', color: 'bg-amber-700' },
+  { id: 'pop_ita', label: 'Pop Italiano', color: 'bg-green-700' },
+  { id: 'neomelodico', label: 'Neomelodico', color: 'bg-blue-400' },
+  { id: 'indie_ita', label: 'Indie Italia', color: 'bg-emerald-800' },
+  { id: 'italo_disco', label: 'Italo Disco', color: 'bg-sky-500' },
+
+  // --- POP & OTHERS ---
+  { id: 'pop', label: 'Modern Pop', color: 'bg-pink-400' },
+  { id: 'synthpop', label: 'Synthpop', color: 'bg-fuchsia-500' },
+  { id: 'indie_pop', label: 'Indie Pop', color: 'bg-emerald-400' },
+  { id: 'hyperpop', label: 'Hyperpop', color: 'bg-lime-400' },
+  { id: 'country', label: 'Country', color: 'bg-amber-700' },
+  { id: 'folk', label: 'Folk', color: 'bg-stone-500' }
 ];
 
-export const MASTERING_STYLES = [
-  'Standard',
-  'Spotify Loudness Optimization',
-  'Club Smash (Aggressive Limiting)',
-  'Warm Vinyl Polish',
-  'Analog Tape Saturation',
-  'Ultra-Wide Stereo Master',
-  'Clean & Transparent Hi-Fi',
-  'Aggressive Mid-Forward',
-  'Silky High-End Polish',
-  'Radio-Ready (Strong Glue)',
+export const MOODS = [
+  'Summer Vibes', 'Tropical Breeze', 'Beach Party', 'Golden Hour', 'Poolside Chill', 'Sunset Romance',
+  'Island Life', 'Carnival Energy', 'Holiday Spirit', 'Iced Coffee Mood', 'Festival Mainstage',
+  'Uplifting', 'Euphoric', 'Dark', 'Moody', 'Melancholic', 'Heartbroken', 'Hopeful', 'Nostalgic',
+  'Inner Peace', 'Ethereal', 'Spiritual', 'Bittersweet', 'Mysterious', 'Dreamy',
+  'Aggressive', 'Industrial', 'Cyberpunk', 'Gritty', 'Savage', 'Brutal', 'Rebellious',
+  'High Energy', 'Frenetic', 'Tense', 'Epic', 'Heroic', 'Warrior Spirit',
+  'Calm', 'Relaxing', 'Lo-Fi Chill', 'Meditative', 'Floating', 'Soothing',
+  'Nocturnal', 'Foggy Morning', 'Spacey', 'Cinematic', 'Underground Club',
+  'Funky', 'Vibrant', 'Playful', 'Bouncy', 'Groovy', 'Sassy', 'Glamorous', 'Retro Future'
 ];
 
-export const GENRE_BPM_RANGES: Record<string, { min: number, max: number, default: number }> = {
-  house: { min: 115, max: 130, default: 124 },
-  techno: { min: 125, max: 150, default: 132 },
-  trance: { min: 130, max: 145, default: 138 },
-  pop: { min: 90, max: 130, default: 120 },
-  kpop: { min: 110, max: 140, default: 125 },
-  reggaeton: { min: 80, max: 100, default: 92 },
-  latin: { min: 90, max: 130, default: 105 },
-  rock: { min: 110, max: 160, default: 130 },
-  metal: { min: 140, max: 200, default: 160 },
-  rnb: { min: 60, max: 90, default: 75 },
-  soul: { min: 70, max: 110, default: 90 },
-  funk: { min: 100, max: 125, default: 112 },
-  disco: { min: 115, max: 130, default: 120 },
-  country: { min: 70, max: 140, default: 100 },
-  dancehall: { min: 90, max: 110, default: 100 },
-  reggae: { min: 70, max: 90, default: 80 },
-  dubstep: { min: 135, max: 145, default: 140 },
-  dnb: { min: 160, max: 180, default: 174 },
-  synthwave: { min: 80, max: 120, default: 100 },
-  ambient: { min: 60, max: 100, default: 80 },
-  edm: { min: 126, max: 132, default: 128 },
-  hiphop: { min: 80, max: 100, default: 90 },
-  trap: { min: 130, max: 160, default: 140 },
-  drill: { min: 140, max: 145, default: 142 },
-  cinematic: { min: 60, max: 90, default: 70 },
-  epic: { min: 90, max: 130, default: 110 },
-  jazz: { min: 80, max: 160, default: 120 },
-  blues: { min: 60, max: 120, default: 80 },
+export const VOCAL_CATEGORIES: Record<string, string[]> = {
+  'Italian Style 🇮🇹': [
+    'Cantautore Italiano', 'Vera Voce Italiana Pop', 'Trap Italia Flow', 'Rap Crudo Italiano',
+    'Indie Italia Malinconico', 'Bel Canto Opera', 'Tenore Drammatico', 'Soprano Leggero',
+    'Vocalità Neomelodica', 'Rock Italiano Graffiante', 'Vocalità Mediterranea'
+  ],
+  'Reggae & Caribbean 🇯🇲': [
+    'Jamaican Patois Vocals', 'Dancehall Toasting', 'Roots Reggae Harmony', 'Dub Poetry Style',
+    'Singjaying Style', 'Rough Ragga Vocals', 'Smooth Lovers Rock Voice', 'Nyahbinghi Chants'
+  ],
+  'Cori & Ensemble 👥': [
+    'Coro Gregoriano (Monastico)', 'Gospel Choir (Soulful)', 'Epic War Choir (Cinematic)', 
+    'Bulgarian Female Choir (Folk)', 'Children Choir (Angelic)', 'Barbershop Quartet', 
+    'Jazz Vocal Ensemble', 'Angelic Choral Pads', 'African Tribal Chants', 'Tibetan Monks Chant', 
+    'Opera Chorus', 'Backing Vocals (Harmonized)', 'Crowd Sing-along', 'Small Chamber Choir',
+    'Vocal Quintet', 'Synthesized Choirs (80s Style)'
+  ],
+  'Pop & International': [
+    'Female Pop Star', 'Male Soul Vocals', 'Silky R&B Flow', 'Gospel Soloist',
+    'Smooth Crooner', 'Husky Female Vocals', 'High-pitched Falsetto', 'Breathiness Enhanced'
+  ],
+  'Electronic & FX': [
+    'Vocoder Robotic', 'Cybernetic AI Voice', 'Whispered ASMR Vocals', 'Sampled Vocal Chops',
+    'Bitcrushed Digital Voice', 'Pitch-shifted Deep Voice', 'Android Harmony', 'Talkbox'
+  ],
+  'Rock & Extreme': [
+    'Death Growl', 'Black Metal Scream', 'Hardcore Shout', 'Punk Snarl',
+    'Grunge Raspiness', 'Classic Rock Gravel', 'Opera Rock Belting', 'Vocal Fry'
+  ]
 };
+
+export const VOCAL_EFFECTS_CATEGORIES: Record<string, string[]> = {
+  'Dynamics & Pitch': [
+    'Hard Autotune', 'Natural Pitch Correction', 'Heavy Compression', 'Vocal Gating',
+    'Doubled Vocals', 'Triple-tracked Harmonies', 'Formant Shifting', 'Parallel Processing',
+    'De-esser Pro', 'Upward Compression', 'Whisper Track Layering', 'Breath Enhancement'
+  ],
+  'Space & Time': [
+    'Cathedral Reverb', 'Infinite Plate Reverb', 'Slapback Delay', 'Ping-pong Echo',
+    'Reverse Reverb Tails', 'Spring Reverb Retro', 'Digital Shimmer', 'Gated Reverb (80s)',
+    'Ethereal Diffused Delay', 'Multi-tap Rhythm Echo', 'Granular Reverb Clouds'
+  ],
+  'Modulation & Texture': [
+    'Ensemble Chorus', 'Flanger Swirl', 'Phaser Sweep', 'Ring Modulation (Metallic)',
+    'Granular Stutter', 'Vibrato Depth', 'Rotary Speaker (Leslie)', 'Tremolo Pulse'
+  ],
+  'Harmonics & Distortion': [
+    'Analog Tape Saturation', 'Tube Drive Warmth', 'Vinyl Crackle Processing', 'Bitcrushed Distortion',
+    'Exciter (High Clarity)', 'Fuzz Vocals', 'Overdriven Preamp', '12-bit Lo-fi Sample Rate'
+  ],
+  'Creative & Lo-Fi': [
+    'Telephone Filter', 'Radio Megaphone', 'Underwater Muffled', 'Granular Vocal Synthesis',
+    'Reverse Vocal Snippets', 'Frequency Shifter', 'Robotizer (Phased)', 'Cyborg Harmony'
+  ]
+};
+
+export const INSTRUMENT_CATEGORIES: Record<string, string[]> = {
+  'Piani & Grandi Tasti': [
+    'Steinway Grand Piano', 'Yamaha C7 Concert Grand', 'Fazioli F308', 'Upright Saloon Piano',
+    'Fender Rhodes MkI', 'Fender Rhodes MkII', 'Wurlitzer 200A', 'Hohner Clavinet D6',
+    'Hammond B3 Organ', 'Vox Continental Organ', 'Farfisa Compact', 'Mellotron M400',
+    'Celesta', 'Harpsichord', 'Toy Piano', 'Prepared Piano', 'CP-80 Electric Grand',
+    'Pipe Organ (Church)', 'Harmonium', 'Accordion (Fisarmonica)'
+  ],
+  'Sintetizzatori Analogici': [
+    'Moog Model D', 'Prophet 5 (Sequential)', 'Roland Jupiter-8', 'Roland Juno-106', 'Korg MS-20',
+    'ARP Odyssey', 'Oberheim OB-Xa', 'Sequential Circuits Pro-One', 'Moog One',
+    'TB-303 Acid Bassline', 'SH-101 Mono Synth', 'Matrix-12 Pads', 'VCS3 Putney',
+    'Memorymoog Polyphonic', 'Polivoks (Russian Synth)'
+  ],
+  'Sintetizzatori Digitali': [
+    'Yamaha DX7 (FM Synthesis)', 'Access Virus TI', 'Nord Lead 4', 'Korg M1', 'Roland D-50',
+    'Fairlight CMI (Vintage Sampler)', 'Serum Wavetable', 'Massive X Bass', 'Omnisphere Textures',
+    'Sylenth1 Lead', 'Spire Plucks', 'Arturia Pigments', 'Modular FM Rig', 'Wavestation Pads',
+    'Ensoniq VFX', 'MicroFreak Digital'
+  ],
+  'Chitarre Elettriche': [
+    'Fender Stratocaster (Clean/Jangle)', 'Fender Telecaster (Twang)', 'Gibson Les Paul (Crunch)',
+    'Gibson ES-335 (Jazz/Blues)', 'Gretsch White Falcon', 'Rickenbacker 360', 'Ibanez RG (High Gain)',
+    'Music Man JP', 'Danelectro Lipstick', 'Baritone Electric', 'E-Bow Guitar',
+    'Double Neck Guitar', 'Fuzz Face Lead', 'Wah-Wah Funk Guitar'
+  ],
+  'Chitarre Acustiche & Folk': [
+    'Martin D-28 Acoustic', 'Taylor 814ce', 'Nylon String Classical', '12-String Acoustic',
+    'Resonator Guitar (Dobro)', 'Lap Steel Guitar', 'Pedal Steel (Country)', 'Flamenco Guitar', 
+    'Ukulele', 'Banjo 5-String', 'Mandolino Napoletano', 'Bouzouki Greek', 'Lute (Liuto)'
+  ],
+  'Bassi & Low End': [
+    'Fender Precision Bass', 'Fender Jazz Bass', 'Rickenbacker 4003', 'Music Man StingRay',
+    'Hofner Violin Bass', 'Upright Double Bass (Jazz)', 'Fretless Bass', 'Slap Funk Bass',
+    '808 Sub Bass (Long Tail)', 'Moog Minitaur Sub', 'Reese DnB Bass', 'Acid Bass 303',
+    'Washtub Bass', 'Synthwave Bass (Moogish)'
+  ],
+  'Batteria Acustica': [
+    'Modern Rock Kit', 'Vintage Jazz Brushes', 'Deep Studio Kit', 'Tight Funk Kit',
+    'Large Arena Drums', 'Indie Lo-fi Drums', 'Speed Metal Double Kick', 'Piccolo Snare',
+    'Marching Band Snare', '70s Disco Drums (Damped)'
+  ],
+  'Drum Machines & Beats': [
+    'Roland TR-808 (Trap/Pop)', 'Roland TR-909 (House/Techno)', 'Roland TR-707', 
+    'LinnDrum LM-1', 'Oberheim DMX', 'E-mu SP-1200 (Boom Bap)', 'MPC 60 Vinyl Samples', 
+    'MPC Renaissance', 'Elektron Machinedrum', 'Amen Breakbeat', 'Industrial Drums',
+    'Simmons SDS-V (Hexagonal Drums)', 'Casio SK-1 Lo-fi'
+  ],
+  'Archi (Strings)': [
+    'Full Symphonic Strings', 'Chamber String Quartet', 'Solo Violin (Lyrical)',
+    'Solo Cello (Deep/Dark)', 'Double Bass Section (Pizzicato)', 'Tremolo Strings (Tense)',
+    'Spiccato Cello Section', 'Epic Staccato Strings', 'Electric Violin', 'Harp (Arpa)'
+  ],
+  'Ottone & Fiati (Brass/Wood)': [
+    'Trumpet Section (Bright)', 'Muted Trumpet (Jazz)', 'Trombone Ensemble',
+    'French Horn (Epic/Cinematic)', 'Tuba Solo', 'Alto Saxophone', 'Tenor Saxophone',
+    'Baritone Saxophone', 'Flute Solo', 'Clarinet', 'Oboe', 'Bassoon', 'English Horn',
+    'Piccolo Flute', 'Soprano Sax'
+  ],
+  'Etnici & Mondiali': [
+    'Sitar (Indian)', 'Tabla (Indian Drums)', 'Koto (Japanese)', 'Shakuhachi Flute',
+    'Oud (Arabic)', 'Ney Flute', 'Duduk (Armenian)', 'Bagpipes (Scottish)',
+    'Didgeridoo', 'Kalimba (Thumb Piano)', 'Steel Pan (Caribbean)', 'Berimbau', 
+    'Erhu (Chinese Violin)', 'Guzheng', 'Balalaika', 'Mbira', 'Taiko Drums'
+  ],
+  'Sound Design & FX': [
+    'White Noise Riser', 'Cinematic Braam (Low Horn)', 'Sub-Drop Boom', 'Vinyl Crackle',
+    'Radio Static/Noise', 'Mechanical Gears', 'Watery Textures', 'Glitch Artifacts',
+    'Atmospheric Ethereal Pad', 'Distant Thunder', 'Birdsong/Nature', 'Heartbeat'
+  ]
+};
+
+export const MASTERING_TARGETS = [
+  { id: 'spotify', label: 'Streaming / Spotify', directive: 'Mastered for Streaming: -14 LUFS, High Dynamic Range, Crystal Clarity, Vocal Focus' },
+  { id: 'club', label: 'Club / Soundsystem', directive: 'Club Master: Heavy Limiting, -7 LUFS, Punchy Low-end, Mono Compatible, High Loudness' },
+  { id: 'vintage', label: 'Vintage Tape', directive: 'Analog Master: Tape Saturation, Soft Highs, Warm Mid-range, Subtle Wow/Flutter' },
+  { id: 'radio', label: 'Radio Airplay', directive: 'Radio Ready: Mid-forward, Consistent Volume, Strong Presence, Saturated Transients' },
+  { id: 'youtube', label: 'YouTube / Video', directive: 'YouTube Optimized: Balanced peaks, dialogue-friendly mids, enhanced stereo width' }
+];
+
+export const MIX_STYLES = [
+  { id: 'clean', label: 'Ultra Clean Digital', category: 'Modern', directive: 'Surgical EQ, transparent transients, wide digital stereo image' },
+  { id: 'analog', label: 'Analog Warmth', category: 'Vintage', directive: 'Tube saturation, rounded transients, harmonic rich, warm low-mids' },
+  { id: 'sidechain', label: 'Heavy Sidechain', category: 'Electronic', directive: 'Rhythmic pumping effect, extreme kick-ducking clarity, aggressive movement' },
+  { id: 'lofi', label: 'Lo-Fi Dusty', category: 'Urban', directive: 'Bitcrushed, muffled highs, vinyl artifacts, 12-bit texture' },
+  { id: 'wall_of_sound', label: 'Wall of Sound', category: 'Rock', directive: 'Massive layering, panoramic double-tracked guitars, dense wall of distortion' }
+];
+
+export const MUSICAL_KEYS = ['Any Key', 'C Major', 'C Minor', 'G Major', 'G Minor', 'D Major', 'D Minor', 'A Major', 'A Minor', 'E Major', 'E Minor', 'F Major', 'F Minor', 'B Major', 'B Minor'];
+export const INSTRUMENT_ROLES = ['Lead', 'Bass', 'Rhythm', 'Pad', 'Atmos', 'FX', 'Feature/Solo', 'Arpeggio', 'Harmony', 'Syncopated'];
+export const INSTRUMENT_INTENSITIES = ['Background', 'Subtle', 'Standard', 'Prominent', 'Solo/Front', 'Aggressive', 'Dynamic'];
+
+export const STRUCTURE_PRESETS: StructurePreset[] = [
+  {
+    id: 'radio_edit',
+    label: 'Radio Edit',
+    structure: {
+      intro: { durationSeconds: 15, energy: 'Low' },
+      verse: { durationSeconds: 45, energy: 'Steady' },
+      chorus: { durationSeconds: 45, energy: 'Rising' },
+      bridge: { durationSeconds: 20, energy: 'Steady' },
+      breakdown: { durationSeconds: 20, energy: 'Low' },
+      outro: { durationSeconds: 15, energy: 'Steady' },
+    }
+  },
+  {
+    id: 'extended_mix',
+    label: 'Extended Club Mix',
+    structure: {
+      intro: { durationSeconds: 60, energy: 'Steady' },
+      verse: { durationSeconds: 60, energy: 'Rising' },
+      chorus: { durationSeconds: 90, energy: 'Explosive' },
+      bridge: { durationSeconds: 30, energy: 'Steady' },
+      breakdown: { durationSeconds: 60, energy: 'Low' },
+      outro: { durationSeconds: 60, energy: 'Steady' },
+    }
+  },
+  {
+    id: 'dj_friendly',
+    label: 'DJ Friendly (Long Intro/Outro)',
+    structure: {
+      intro: { durationSeconds: 60, energy: 'Steady' },
+      verse: { durationSeconds: 45, energy: 'Steady' },
+      chorus: { durationSeconds: 60, energy: 'Rising' },
+      bridge: { durationSeconds: 30, energy: 'Low' },
+      breakdown: { durationSeconds: 45, energy: 'Low' },
+      outro: { durationSeconds: 60, energy: 'Steady' },
+    }
+  }
+];
 
 export const SONG_LENGTHS: { id: SongLength; label: string; description: string }[] = [
   { id: 'Short', label: 'Short (~2m)', description: 'Quick punchy structure' },
@@ -82,372 +334,19 @@ export const SONG_LENGTHS: { id: SongLength; label: string; description: string 
   { id: 'Long', label: 'Long (~5m+)', description: 'Extended club mix' },
 ];
 
-export const LENGTH_PRESETS: LengthPreset[] = [
-  { 
-    id: 'radio_30s', 
-    label: '30s Radio / Reel Edit', 
-    length: 'Short', 
-    arrangement: 'Modern Radio (V-C-V-C-B-C)', 
-    intro: 'Short & Punchy', 
-    outro: 'Hard Stop' 
-  },
-  { 
-    id: 'intro_1m', 
-    label: '1min Intro Edit', 
-    length: 'Short', 
-    arrangement: 'Linear Build (No Chorus)', 
-    intro: 'Extended DJ Intro (32-bar)', 
-    outro: 'Fade Out' 
-  },
-  { 
-    id: 'full_radio', 
-    label: 'Standard Radio (~3m)', 
-    length: 'Medium', 
-    arrangement: 'Pop Classic (I-V-C-V-C-B-C-O)', 
-    intro: 'Standard', 
-    outro: 'Fade Out' 
-  },
-  { 
-    id: 'extended_mix', 
-    label: '5min+ Extended Mix', 
-    length: 'Long', 
-    arrangement: 'Club (I-V-B-D-V-B-D-O)', 
-    intro: 'Extended DJ Intro (32-bar)', 
-    outro: 'DJ Loop (Beat Outro)',
-    breakdown: 'Melodic & Emotional'
-  },
-];
-
-export const INTRO_STYLES = [
-  'Standard',
-  'Extended DJ Intro (32-bar)',
-  'Short & Punchy',
-  'Atmospheric Build-up',
-  'Acappella Start',
-  'Drum Fill Intro',
-  'Guitar Riff',
-  'Spoken Intro'
-];
-
-export const INTRO_BUILDUPS = [
-  'Standard',
-  'Short',
-  'Medium',
-  'Long'
-];
-
-export const ARRANGEMENT_TYPES = [
-  'Pop Classic (I-V-C-V-C-B-C-O)',
-  'Modern Radio (V-C-V-C-B-C)',
-  'Club (I-V-B-D-V-B-D-O)',
-  'Epic Trailer (I-B-C-B-Climax-O)',
-  'Acoustic (I-V-C-V-C-O)',
-  'Linear Build (No Chorus)',
-  'Complex Progressive'
-];
-
-export const BRIDGE_STYLES = [
-  'Emotional Pivot',
-  'High Energy Peak',
-  'Minimal & Ambient',
-  'Rhythmic/Rap Section',
-  'Instrumental Solo',
-  'Atmospheric Interlude',
-  'Experimental/Glitch'
-];
-
-export const SECTION_ENERGY = [
-  'Low',
-  'Steady',
-  'Rising',
-  'Explosive'
-];
-
-export const OUTRO_STYLES = [
-  'Standard',
-  'Fade Out',
-  'Hard Stop',
-  'DJ Loop (Beat Outro)',
-  'Deconstructed/Glitch',
-  'Ambient Decay',
-  'Guitar Solo Fade',
-  'Acoustic Reprise'
-];
-
-export const OUTRO_FADES = [
-  'Standard',
-  'Slow Fade',
-  'Abrupt Stop',
-  'Echoing Decay'
-];
-
-export const BREAKDOWN_TYPES = [
-  'Standard',
-  'Melodic & Emotional',
-  'High Energy Build-up',
-  'Minimal & Stripped',
-  'Chaotic/Intense',
-  'Orchestral/Cinematic',
-  'Solo Section',
-  'A Capella Break'
-];
-
-export const BREAKDOWN_INTENSITIES = [
-  'Standard',
-  'Low',
-  'Medium',
-  'High'
-];
-
-export const STRUCTURE_DESCRIPTIONS: Record<string, string> = {
-  'Standard': 'Bilanciamento di default.',
-  'Low': 'Riduce drasticamente la densità del mix.',
-  'Medium': 'Livello di energia o durata intermedia.',
-  'High': 'Massima spinta sonora e stratificazione.',
-  'Short': 'Transizione rapida e incisiva (4-8 battute).',
-  'Long': 'Progressione estesa (16-32 battute).',
-  'Extended DJ Intro (32-bar)': 'Crea una lunga sezione ritmica iniziale.',
-  'Atmospheric Build-up': 'Inizia con pad eterei e riverberi.',
-  'Fade Out': 'Decremento logaritmico del volume generale.',
-  'Slow Fade': 'Dissolvenza estremamente lenta e sognante.',
-  'Abrupt Stop': 'Termina il brano istantaneamente.',
-  'Echoing Decay': 'Decade nel silenzio con code di delay.',
+export const GENRE_BPM_RANGES: Record<string, { min: number, max: number, default: number }> = {
+  house: { min: 120, max: 128, default: 124 },
+  techno: { min: 126, max: 145, default: 132 },
+  trap_ita: { min: 130, max: 160, default: 140 },
+  rap_ita: { min: 85, max: 105, default: 92 },
+  edm: { min: 126, max: 132, default: 128 },
+  pop: { min: 90, max: 130, default: 115 },
+  reggaeton: { min: 85, max: 105, default: 94 },
+  reggae: { min: 60, max: 85, default: 72 },
+  reggae_roots: { min: 60, max: 80, default: 70 }
 };
 
-export const GENRE_INSTRUMENTS: Record<string, string[]> = {
-  house: ['Korg M1 Piano', '909 Drums', 'Deep Sub Bass', 'Rhodes Piano', 'Diva Vocals', 'Funky Guitar', 'Saxophone', 'Disco Strings', 'Violin Solo', 'Orchestra Hit', 'Trumpet'],
-  techno: ['Roland 909 Kick', 'Rumble Bass', 'TB-303 Acid', 'Modular Bleeps', 'Industrial Percussion', 'Dissonant Stabs', 'Hypnotic Loops', 'Dark Strings'],
-  trance: ['Supersaw Leads', 'Plucked Synths', 'Arpeggiated Bass', 'Atmospheric Pads', 'Female Vocal Chops', 'Snare Rolls', 'Gate Effect', 'Orchestral Breakdown', 'Epic Strings', 'Cello'],
-  pop: ['Polished Synths', 'Electric Guitar', 'Acoustic Guitar', 'Snap Percussion', '808 Bass', 'Drum Machine', 'Piano', 'String Section', 'Catchy Vocal Chops', 'Flute', 'Accordion'],
-  kpop: ['High-Energy Synths', 'Trap Beats', 'Funk Guitar', 'Deep Bass', 'Group Vocals', 'Rap Verse FX', 'Bright Brass', 'Glassy Pads'],
-  reggaeton: ['Dembow Beat', 'Synth Bass Pluck', 'Spanish Guitar', 'Steel Drums', 'Air Horn', 'Synthesized Mallets', 'Marimba', 'Sub Bass'],
-  latin: ['Nylon Guitar', 'Trumpet Section', 'Congas', 'Timbales', 'Bongos', 'Piano Montuno', 'Upright Bass', 'Accordion', 'Guiro'],
-  rock: ['Distorted Electric Guitar', 'Overdriven Bass', 'Acoustic Drums', 'Crash Cymbals', 'Power Chords', 'Guitar Solo', 'Hammond Organ', 'Bagpipes'],
-  metal: ['Down-tuned Guitar', 'Double Kick Drum', 'Distorted Bass', 'Screaming Vocals', 'Pinch Harmonics', 'Blast Beats', 'Symphonic Strings'],
-  rnb: ['Rhodes Piano', 'Finger Snaps', 'Deep Moog Bass', 'Slow Jam Drums', 'Smooth Strings', 'Saxophone', 'Harp', 'Wind Chimes'],
-  soul: ['Hammond B3 Organ', 'Horn Section', 'Clean Electric Guitar', 'Upright Bass', 'Vintage Drum Kit', 'Grand Piano', 'Gospel Choir', 'Tambourine'],
-  funk: ['Slap Bass', 'Wah-Wah Guitar', 'Clavinet', 'Brass Section', 'Tight Snare', 'Cowbell', 'Congas', 'Synth Lead'],
-  disco: ['Funky Rhythm Guitar', 'Octave Bassline', 'String Machine', 'Four-on-the-Floor Kick', 'Open Hi-Hats', 'Electric Piano', 'Brass Stabs', 'Syndrums'],
-  country: ['Acoustic Guitar', 'Pedal Steel', 'Fiddle', 'Banjo', 'Telecaster Twang', 'Harmonica', 'Brushed Snare', 'Mandolin', 'Accordion', 'Bagpipes'],
-  dancehall: ['Sleng Teng Bass', 'Off-beat Keys', 'Electronic Drums', 'Air Horn', 'Steel Pan', 'Marimba', '808 Sub', 'Brass Stabs'],
-  reggae: ['Shank Guitar', 'Bubble Organ', 'Walking Bassline', 'Brass Section', 'Rimshot', 'Timbales', 'Clavinet', 'Trombone'],
-  dubstep: ['Wobble Bass', 'Growl Bass', 'Sub Drop', 'Snare with Reverb', 'Arpeggiators', 'Glitch Effects', '140 BPM Drums', 'Cinematic Strings', 'Brass Braams'],
-  dnb: ['Reese Bass', 'Amen Break', '808 Sub', 'Hoover Synth', 'Liquid Pads', 'Fast Hi-Hats', 'Atmospheric FX', 'Jazz Samples', 'Saxophone', 'Double Bass'],
-  synthwave: ['Juno-106 Chords', 'Linndrum', 'Analog Bass Arp', 'Gated Reverb Snare', 'Yamaha DX7 Bells', 'Neon Pads', 'Electric Guitar Solo'],
-  ambient: ['Field Recordings', 'Drone Synths', 'Granular Synthesis', 'Tape Loops', 'Soft Piano', 'Singing Bowls', 'Rain Sounds', 'Cello Drone', 'Flute', 'Harp'],
-  edm: ['Big Room Kick', 'Pryda Snare', 'White Noise Risers', 'Pitch Risers', 'Drop Synths', 'Layered Leads', 'Hardstyle Kick', 'Orchestral Hits'],
-  hiphop: ['MPC Drums', '808 Bass', 'Sampled Piano', 'Funky Bassline', 'Scratches', 'Brass Stabs', 'Vinyl Strings', 'Orchestral Hits', 'Violin Sample', 'Cello Sample'],
-  trap: ['808 Sub', 'Fast Hi-Hats', 'Synthesized Brass', 'Plucked Leads', 'Snare Rolls', 'Hard Kick', 'Gothic Choir', 'Dark Strings', 'Tubular Bells'],
-  drill: ['Sliding 808s', 'Hi-Hat Triplets', 'Dark Piano', 'Bell Chords', 'Snare Rolls', 'Vocal Chops', 'Violin Melody'],
-  cinematic: ['Orchestral Strings', 'Taiko Drums', 'Grand Piano', 'French Horns', 'Choir', 'Timpani', 'Cello Solo', 'Violin Solo', 'Harp', 'Woodwinds', 'Tubular Bells', 'Gong', 'Full Orchestra', 'Spiccato Strings', 'Oboe', 'Clarinet', 'Flute', 'Bagpipes'],
-  epic: ['Hybrid Trailer FX', 'Massive Brass', 'Thunderous Percussion', 'Ostinato Strings', 'Braams', 'Electric Cello', 'War Drums', 'Epic Choir', 'Orchestra Hit', 'Wagner Tuba', 'Full Orchestra'],
-  jazz: ['Upright Bass', 'Grand Piano', 'Saxophone', 'Trumpet', 'Brushes Drum Kit', 'Hollow Body Guitar', 'Vibraphone', 'Clarinet', 'Trombone', 'String Quartet', 'Flute', 'Accordion'],
-  blues: ['Electric Guitar', 'Harmonica', 'Slide Guitar', 'Hammond Organ', 'Bass Guitar', 'Drum Kit', 'Acoustic Guitar', 'Piano', 'Brass Section'],
-};
-
-export const PRO_MIX_TECHNIQUES = [
-  'Sidechain Compression',
-  'Filter Sweep Up',
-  'Vocal Reverb Throw',
-  'Stereo Hi-Hats',
-  'Low-End Mono Sum',
-  'Pump Effect',
-  'Rumble Bass EQ',
-  'Industrial Distortion',
-  'Transient Shaping',
-  'Dark Reverb Automation'
-];
-
-export const GENRE_SOUND_DESIGN: Record<string, string[]> = {
-  house: ['Filter Sweeps', 'Sidechain Pump', 'Vinyl Hiss', 'Disco Stabs', 'Vocal Chops', 'Lo-Fi Texture'],
-  techno: ['Rumble Kick', 'Modular Bleeps', 'Industrial Drone', 'Metallic Percussion', 'Distortion', 'Raw Analog'],
-  trance: ['White Noise Risers', 'Gated Pads', 'Euphoric Plucks', 'Stereo Widening', 'Ping Pong Delay', 'Sidechain Ducking'],
-  pop: ['Polished Vocal Processing', 'Crisp High-End', 'Radio-Ready Compression', 'Glistening Reverb', 'Tight Quantization', 'Stereo Spread'],
-  kpop: ['Maximalist Production', 'Genre-Switching', 'Glossy Vocals', 'Impactful Drops', 'Intricate Layers', 'Hyper-Pop Textures'],
-  reggaeton: ['Hard Dembow Kick', 'Vocal Stutter', 'Auto-Tune Pitch Correction', 'Tropical Reverb', 'Short Delay', 'Pump Effect'],
-  latin: ['Live Room Percussion', 'Bright Brass Sections', 'Natural Reverb', 'Warm Acoustic Guitar', 'Sharp Transients'],
-  rock: ['Tube Amp Distortion', 'Room Mic Bleed', 'Feedback Swells', 'Live Drum Sound', 'Raw Energy', 'Double Tracked Guitars'],
-  metal: ['High Gain Distortion', 'Triggered Drums', 'Scooped Mids', 'Aggressive Compression', 'Palm Mutes', 'Dark Ambience'],
-  rnb: ['Velvet Textures', 'Warm Saturation', 'Vocal Harmonies', 'Smooth Reverb Tail', 'Vinyl Crackle', 'Slow Attack'],
-  soul: ['Vintage Tape Hiss', 'Warm Tube Preamp', 'Live Room Feel', 'Plate Reverb', 'Dynamic Range', 'Analog Warmth'],
-  funk: ['Tight Compression', 'Envelope Filter', 'Dry Drums', 'Bright Brass', 'Percussive Guitar', 'Groove Swing'],
-  disco: ['Phaser on Hi-Hats', 'String Machine Swells', 'Pump Compression', 'Shiny Highs', 'Slapback Delay', 'Retro Shine'],
-  country: ['Natural Acoustic Room', 'Plate Reverb on Vocals', 'Clean Telecaster Tone', 'Warm Bass', 'Intimate Vocal'],
-  dancehall: ['Air Horn', 'Siren FX', 'Rewind Sound', 'Heavy Sub', 'Gunshot Sample', 'Pitch Correction'],
-  reggae: ['Spring Reverb', 'Space Echo', 'Tape Delay', 'Dub Siren', 'Phaser', 'Tube Saturation'],
-  dubstep: ['Formant Shifting', 'Wobble Bass', 'Metallic Screech', 'Bitcrushed Drums', 'Laser Zaps', 'Hard Clipping'],
-  dnb: ['Reese Bass', 'Time-stretch', 'Amen Chop', 'Tape Saturation', 'Glitch FX', 'Comb Filtering'],
-  synthwave: ['Analog Warmth', 'VHS Flutter', 'Tape Saturation', 'Gated Reverb', 'Chorus', 'Detuned Synths'],
-  ambient: ['Granular Synthesis', 'Paulstretch', 'Field Recordings', 'Shimmer Reverb', 'Binaural Beats', 'Slow Attack'],
-  edm: ['Downlifters', 'CO2 Cannon', 'Crowd Noise', 'Pitch Risers', 'Drop Stabs', 'Multiband Compression'],
-  hiphop: ['Vinyl Crackle', 'Sample Chopping', 'Low Pass Filter', 'Tape Saturation', 'Groove Quantize'],
-  trap: ['Hard Clipping', 'Pitch Glides', 'Gross Beat', 'Saturation', 'Transient Shaping'],
-  drill: ['Glide Notes', 'Half-time', 'Dark Reverb', 'Distortion', 'Stereo Width'],
-  cinematic: ['Huge Hall Reverb', 'Dynamic Swells', 'Sub Booms', 'Atmos', 'Orchestral Positioning'],
-  epic: ['Impact FX', 'Risers', 'Hybrid Trailer FX', 'Compression', 'Cinematic Hits'],
-  jazz: ['Room Reverb', 'Warm Tube Saturation', 'Live Recording Feel', 'Tape Hiss', 'Dynamic Range'],
-  blues: ['Amp Distortion', 'Spring Reverb', 'Tube Overdrive', 'Mono Room Mic', 'Vintage Compression', 'Raw Mix'],
-};
-
-export const GENRE_MIX_MASTER: Record<string, string[]> = {
-  house: ['Sidechain Compression', 'Filter Sweep Up', 'Vocal Reverb Throw', 'Stereo Hi-Hats', 'Low-End Mono Sum', 'Pump Effect'],
-  techno: ['Rumble Bass EQ', 'Industrial Distortion', 'Transient Shaping', 'Dark Reverb Automation', 'Master Limiter Clipping', 'Metallic Delay'],
-  trance: ['Euphoric Reverb Swell', 'Ping-Pong Delay', 'Gated Trance Pads', 'White Noise Riser', 'Build-up Tension', 'Stereo Widening'],
-  pop: ['Vocal Volume Rides', 'Parallel Drum Compression', 'Bright EQ Boost', 'Master Bus Glue', 'Widened Chorus', 'De-Essing'],
-  kpop: ['Punchy Kick', 'Crisp Vocals', 'Extreme Stereo Width', 'Hard Limiting', 'Dynamic EQ', 'Vocal Chop Effects'],
-  reggaeton: ['Kick-Bass Sidechain', 'Vocal Presence Boost', 'Snare Snap EQ', 'Sub Bass Saturation', 'Tight Low End', 'Bright Percussion'],
-  latin: ['Natural Percussion Pan', 'Brass Brilliance', 'Acoustic Guitar Clarity', 'Vocal Warmth', 'Live Dynamic Range'],
-  rock: ['Guitar Wall of Sound', 'Snare Crack Compression', 'Bass Grit', 'Vocal Aggression', 'Overhead Drum Mic Crush'],
-  metal: ['Kick Drum Click EQ', 'Guitar High-Gain Clarity', 'Bass Distortion Blend', 'Vocal Screaming Limiting', 'Tight Gating'],
-  rnb: ['Low-Mid Warmth', 'Silky Highs', 'Soft Knee Compression', 'Vocal Air Boost', 'Bass Guitar Definition', 'Smooth Fade-outs'],
-  soul: ['Vintage Console Emulation', 'Tape Saturation', 'Mono Compatibility', 'Warm Tube EQ', 'Dynamic Vocal Rides'],
-  funk: ['Bass Guitar Pop', 'Snare Ghost Notes', 'Guitar Scratch Presence', 'Horn Section Shine', 'Tight Rhythm Bus'],
-  disco: ['Four-on-the-Floor Kick Punch', 'Bass Guitar Octave Blend', 'Hi-Hat Sizzle', 'String Section Spread', 'Vocal Harmony Pan'],
-  country: ['Vocal Forward Mix', 'Acoustic Guitar Sparkle', 'Pedal Steel Reverb', 'Natural Drum Room', 'Warm Master'],
-  dancehall: ['Bass Boost', 'Crisp High-End', 'Vocal Autotune', 'Siren FX Send', 'Punchy Kick Compression', 'Rhythm Quantize'],
-  reggae: ['Spring Reverb Splash', 'Tape Echo Feedback', 'Deep Sub Bass', 'Guitar High-Pass', 'Snare Rimshot EQ', 'Space Echo'],
-  dubstep: ['Multiband Compression', 'Formant Shift Automation', 'Sub-Bass Saturation', 'Hard Clipping', 'LFO Wobble Speed', 'Drop Impact'],
-  dnb: ['Fast Limiter', 'Transient Snap', 'Reese Bass Widening', 'Drum Bus Compression', 'High-Pass Filter Automation', 'Liquid Filtering'],
-  synthwave: ['Gated Reverb Snare', 'VHS Tape Warble', 'Analog Chorus', 'Master Tape Saturation', 'Bass Arp Filter', 'Retro EQ'],
-  ambient: ['Huge Hall Reverb', 'Paulstretch', 'Binaural Panning', 'Slow Attack Volume', 'Shimmer Delay', 'Granular Freeze'],
-  edm: ['Hard Limiting', 'Pitch Riser', 'Drop Volume Boost', 'Stereo Widener', 'CO2 Cannon FX', 'Sidechain Ducking'],
-  hiphop: ['Parallel Compression', 'Tape Saturation', 'Vocal Presence Boost', 'Kick Transient', 'Low-Pass Filter Intro', 'Vinyl Crackle'],
-  trap: ['808 Distortion', 'Hard Clipper', 'Hi-Hat Rolls Pan', 'Vocal Stutter', 'Half-time Effect', 'Sub Bass Glue'],
-  drill: ['Sliding 808s', 'Hi-Hat Triplets', 'Dark Plate Reverb', 'Snare EQ Boost', 'Vocal Chop Delay', 'Stereo Width', 'Glide Automation'],
-  cinematic: ['Dynamic Range Expansion', 'Orchestral Hall Reverb', 'Sub-Bass Boom', 'Volume Swells', 'Section Panning', 'Epic Impact'],
-  epic: ['Hybrid Impact Compression', 'Brass Swell', 'Trailer Hits', 'Master Bus Glue', 'Braam Distortion', 'Risky Dynamic Range'],
-  jazz: ['Room Reverb', 'Warm Tube EQ', 'Dynamic Mic Compression', 'Tape Hiss', 'Natural Panning', 'Live Room Feel'],
-  blues: ['Amp Distortion', 'Spring Reverb', 'Tube Overdrive', 'Mono Room Mic', 'Vintage Compression', 'Raw Mix'],
-};
-
-export const GENERIC_AUTOMATIONS = [
-  'Slow Low-Pass Filter Sweep',
-  'High-Pass Filter Rise',
-  'Dynamic Sidechain Compression',
-  'Volume Swell',
-  'Automated Panning',
-  'LFO Pitch Modulation',
-  'Reverb Throw',
-  'Delay Feedback Rise',
-  'Resonance Automation',
-  'Gated Volume Effect',
-  'Tape Stop Effect',
-  'Bitcrush Automation'
-];
-
-export const MOODS = [
-  'Energetic', 'Melodic', 'Dark', 'Uplifting', 'Chill', 'Melancholic',
-  'Aggressive', 'Euphoric', 'Hypnotic', 'Ethereal', 'Gritty',
-  'Soulful', 'Funky', 'Industrial', 'Dreamy', 'Chaotic',
-  'Intense', 'Minimal', 'Psychedelic', 'Romantic', 'Nostalgic',
-  'Happy', 'Sad', 'Angry', 'Hopeful', 'Sexy', 'Groovy',
-  'Summer Vibe', 'Party', 'Sunset', 'Club', 'Rave', 'Disco', 'Festival'
-];
-
-export const VOCAL_STYLES = [
-  'Auto-tuned',
-  'Barbershop Quartet',
-  'Beatboxing',
-  'Chanting',
-  'Choir',
-  'Church Choir',
-  'Crooner',
-  'Duet',
-  'Ethereal',
-  'Falsetto',
-  'Female Soprano',
-  'Female Vocals',
-  'Gospel Choir',
-  'Gritty',
-  'Growling',
-  'Instrumental (No Vocals)',
-  'Italian Vocals',
-  'Jamaican Patois',
-  'Latin Gregorian Chants',
-  'Latin Prayers',
-  'Male Baritone',
-  'Male Vocals',
-  'Opera',
-  'Pop Diva',
-  'Rapping',
-  'Robotic/Vocoder',
-  'Scat Singing',
-  'Screamo',
-  'Shouting/Screaming',
-  'Soulful Ad-libs',
-  'Spoken Word',
-  'Throat Singing',
-  'Vocaloid Style',
-  'Whispering',
-  'Yodeling'
-];
-
-export const VOCAL_EFFECTS = [
-  'Reverb', 'Delay/Echo', 'Heavy Distortion', 'Autotune', 'Vocoder',
-  'Telephone Effect', 'Whisper Effect', 'Chopped', 'Stutter', 'Harmonizer',
-  'Megaphone', 'Underwater', 'Bitcrushed', 'Reverse Reverb', 'Gated', 'Clean',
-  'Radio Voice', 'Flanger', 'Phaser', 'Double Tracking', 'Lo-Fi',
-  'Hard Pitch Correction', 'Slapback'
-];
-
-export const MUSICAL_KEYS = [
-  'Any Key',
-  'C Major', 'C Minor',
-  'C# Major', 'C# Minor',
-  'D Major', 'D Minor',
-  'Eb Major', 'Eb Minor',
-  'E Major', 'E Minor',
-  'F Major', 'F Minor',
-  'F# Major', 'F# Minor',
-  'G Major', 'G Minor',
-  'Ab Major', 'Ab Minor',
-  'A Major', 'A Minor',
-  'Bb Major', 'Bb Minor',
-  'B Major', 'B Minor',
-  'Phrygian Mode', 'Dorian Mode', 'Mixolydian Mode'
-];
-
-export const INSTRUMENT_ROLES = [
-  'Feature', 'Lead', 'Bass', 'Rhythm', 'Pad', 'Atmosphere', 'FX', 'Fill', 'Solo', 'Backing'
-];
-
-export const INSTRUMENT_INTENSITIES = [
-  'Prominent', 'Standard', 'Subtle', 'Background'
-];
-
-export const ROLE_DESCRIPTIONS: Record<string, string> = {
-  Feature: 'Lo strumento principale che spicca nel mix.',
-  Lead: 'La melodia portante che guida il brano.',
-  Bass: 'Gestione delle frequenze basse e del groove.',
-  Rhythm: 'Supporto ritmico e armonico (accordi).',
-  Pad: 'Texture sostenute per creare atmosfera.',
-  Atmosphere: 'Sottofondo ambientale e spaziale.',
-  FX: 'Effetti sonori e transizioni creative.',
-  Fill: 'Abbellimenti ritmici tra le sezioni.',
-  Solo: 'Sezione dedicata per un virtuosismo strumentale.',
-  Backing: 'Supporto armonico di sottofondo.'
-};
-
-export const VOCAL_STYLE_DESCRIPTIONS: Record<string, string> = {
-  'Auto-tuned': 'Voce moderna con correzione d\'intonazione marcata.',
-  'Barbershop Quartet': 'Ensemble di quattro voci maschili con armonie strette a cappella.',
-  'Beatboxing': 'Percussioni vocali e suoni ritmici prodotti esclusivamente con la bocca.',
-  'Chanting': 'Canto ritmico e ripetitivo, quasi tribale.',
-  'Ethereal': 'Voce celestiale, leggera e ricca di riverbero.',
-  'Gospel Choir': 'Potente ensemble corale con grande energia spirituale e dinamica.',
-  'Opera': 'Canto lirico classico con tecnica di proiezione vocale e vibrato drammatico.',
-  'Scat Singing': 'Improvvisazione vocale jazz con sillabe senza senso ritmiche.',
-  'Soulful Ad-libs': 'Espressioni vocali estemporanee cariche di emozione tra le frasi principali.',
-  'Spoken Word': 'Testo parlato, stile narrativo o poetico, simile allo slam poetry.',
-  'Throat Singing': 'Canto armonico profondo e gutturale tipico della tradizione mongola o tibetana.',
-  'Vocaloid Style': 'Voce sintetizzata, robotica ma melodica tipica del pop giapponese moderno.',
-  'Robotic/Vocoder': 'Suono elettronico e sintetico della voce.',
-  'Yodeling': 'Canto che alterna rapidamente toni bassi di petto e toni alti di testa.'
-};
-
-export const PLACEHOLDER_PROMPT = {
-  title: "Neon Horizon",
-  styleParams: "Uplifting Trance, 138 BPM, Ethereal Female Vocals, Sawtooth Leads, Driving Bassline, Hall Reverb, Stereo Delay, Sidechain",
-  lyricsAndStructure: "[Intro]\n[Atmospheric Pads]\n\n[Verse 1]\nLost in the silence of the night\nGuiding us towards the light\n\n[Build]\nEnergy rising...\n\n[Drop]\n[High energy synth melody]",
-  vibeDescription: "A peak-time trance banger focusing on euphoria and energy."
-};
+export const INTRO_BUILDUPS = ['Minimal', 'Standard', 'Epic', 'Ambient Start', 'Percussive', 'Vocal Intro'];
+export const OUTRO_FADES = ['Slow Fade', 'Abrupt Stop', 'Infinite Echo', 'Vinyl Stop', 'Rhythmic Trail'];
+export const ARRANGEMENT_TYPES = ['Standard', 'Linear Build', 'Loop-based', 'Experimental', 'Traditional Pop'];
+export const BREAKDOWN_TYPES = ['Instrumental', 'Vocal solo', 'Percussive', 'Atmospheric', 'Acoustic Strip-down'];

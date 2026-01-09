@@ -25,14 +25,24 @@ export interface InstrumentSettings {
   intensity?: string;
 }
 
-export interface LengthPreset {
+export interface SectionControl {
+  durationSeconds: number; 
+  energy: string;
+}
+
+export interface GranularStructure {
+  intro: SectionControl;
+  verse: SectionControl;
+  chorus: SectionControl;
+  bridge: SectionControl;
+  breakdown: SectionControl;
+  outro: SectionControl;
+}
+
+export interface StructurePreset {
   id: string;
   label: string;
-  length: SongLength;
-  arrangement?: string;
-  intro?: string;
-  outro?: string;
-  breakdown?: string;
+  structure: GranularStructure;
 }
 
 export interface Preset {
@@ -41,7 +51,6 @@ export interface Preset {
   selectedGenres: GenreOption[];
   genreWeights: Record<string, number>;
   selectedLength: SongLength;
-  selectedLengthPresetId?: string;
   selectedInstruments: InstrumentSettings[];
   selectedMoods: string[];
   selectedVocals: string[];
@@ -49,19 +58,16 @@ export interface Preset {
   selectedSoundDesign?: string[];
   selectedAutomations?: string[];
   selectedMasteringStyle?: string;
-  selectedIntroStyle?: string;
-  selectedIntroBuildup?: string;
-  selectedOutroStyle?: string;
-  selectedOutroFade?: string;
-  selectedBreakdownType?: string;
-  selectedBreakdownIntensity?: string;
-  selectedArrangement?: string;
-  selectedBridgeStyle?: string;
-  verseEnergy?: string;
-  chorusEnergy?: string;
   selectedKey?: string;
   selectedBpm?: number;
   lyricsTheme?: string;
+  granularStructure?: GranularStructure;
+  selectedIntroBuildup?: string;
+  selectedOutroFade?: string;
+  selectedBreakdownType?: string;
+  selectedArrangement?: string;
+  selectedArrangementPresetId?: string;
+  isInstrumental?: boolean;
 }
 
 export type SongLength = 'Short' | 'Medium' | 'Long';
